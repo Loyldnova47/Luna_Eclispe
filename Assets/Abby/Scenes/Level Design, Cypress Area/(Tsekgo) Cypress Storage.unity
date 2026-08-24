@@ -40160,7 +40160,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &225775589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40173,8 +40173,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
-  currentHealth: 0
-  maxHealth: 0
+  currentHealth: 3
+  maxHealth: 3
   agent: {fileID: 0}
   player: {fileID: 1889850202}
   whatIsGround:
@@ -70871,7 +70871,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &371712576
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70884,8 +70884,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
-  currentHealth: 0
-  maxHealth: 0
+  currentHealth: 3
+  maxHealth: 3
   agent: {fileID: 0}
   player: {fileID: 1889850202}
   whatIsGround:
@@ -96095,7 +96095,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &466573074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96108,8 +96108,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
-  currentHealth: 0
-  maxHealth: 0
+  currentHealth: 3
+  maxHealth: 3
   agent: {fileID: 0}
   player: {fileID: 1889850202}
   whatIsGround:
@@ -108380,7 +108380,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
-  currentHealth: 0
+  currentHealth: 3
   maxHealth: 3
   agent: {fileID: 0}
   player: {fileID: 1889850202}
@@ -131091,7 +131091,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &595660382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131104,8 +131104,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
-  currentHealth: 0
-  maxHealth: 0
+  currentHealth: 3
+  maxHealth: 3
   agent: {fileID: 0}
   player: {fileID: 1889850202}
   whatIsGround:
@@ -161177,7 +161177,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &722715272
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161190,8 +161190,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
-  currentHealth: 0
-  maxHealth: 0
+  currentHealth: 3
+  maxHealth: 3
   agent: {fileID: 0}
   player: {fileID: 1889850202}
   whatIsGround:
@@ -184597,7 +184597,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &850838816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184610,8 +184610,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
-  currentHealth: 0
-  maxHealth: 0
+  currentHealth: 3
+  maxHealth: 3
   agent: {fileID: 0}
   player: {fileID: 1889850202}
   whatIsGround:
@@ -302363,7 +302363,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1354046830
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -302376,8 +302376,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
-  currentHealth: 0
-  maxHealth: 0
+  currentHealth: 3
+  maxHealth: 3
   agent: {fileID: 0}
   player: {fileID: 1889850202}
   whatIsGround:
@@ -306425,7 +306425,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1380626936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306438,8 +306438,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
-  currentHealth: 0
-  maxHealth: 0
+  currentHealth: 3
+  maxHealth: 3
   agent: {fileID: 0}
   player: {fileID: 1889850202}
   whatIsGround:
@@ -315208,7 +315208,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1435604893
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -315221,8 +315221,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
-  currentHealth: 0
-  maxHealth: 0
+  currentHealth: 3
+  maxHealth: 3
   agent: {fileID: 0}
   player: {fileID: 1889850202}
   whatIsGround:
@@ -353793,7 +353793,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1638214831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -353806,8 +353806,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
-  currentHealth: 0
-  maxHealth: 0
+  currentHealth: 3
+  maxHealth: 3
   agent: {fileID: 0}
   player: {fileID: 1889850202}
   whatIsGround:
@@ -386539,7 +386539,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1779361647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -386552,8 +386552,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
-  currentHealth: 0
-  maxHealth: 0
+  currentHealth: 3
+  maxHealth: 3
   agent: {fileID: 0}
   player: {fileID: 1889850202}
   whatIsGround:
@@ -403843,7 +403843,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1847480721
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -403856,8 +403856,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
-  currentHealth: 0
-  maxHealth: 0
+  currentHealth: 3
+  maxHealth: 3
   agent: {fileID: 0}
   player: {fileID: 1889850202}
   whatIsGround:
@@ -412501,7 +412501,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1905340943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -412514,8 +412514,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
-  currentHealth: 0
-  maxHealth: 0
+  currentHealth: 3
+  maxHealth: 3
   agent: {fileID: 0}
   player: {fileID: 1889850202}
   whatIsGround:
@@ -465894,7 +465894,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2113862299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -465907,8 +465907,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
-  currentHealth: 0
-  maxHealth: 0
+  currentHealth: 3
+  maxHealth: 3
   agent: {fileID: 0}
   player: {fileID: 1889850202}
   whatIsGround:
@@ -466080,7 +466080,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2114454441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -466093,8 +466093,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
-  currentHealth: 0
-  maxHealth: 0
+  currentHealth: 3
+  maxHealth: 3
   agent: {fileID: 0}
   player: {fileID: 1889850202}
   whatIsGround:

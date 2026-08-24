@@ -8,15 +8,15 @@ public class WayPointAI : Actor
     public Transform player;
     public LayerMask whatIsGround, whatIsPlayer;
 
-    //Death reward to Luna for killing Glorp 
+    //Death reward to Luna for killing Glorp(enemy)
     public int healthRewardOnDeath = 2;
 
-    //Patrolling 
+    //Patrolling between waypoints
     public Transform[] waypoints;
     private int currentWaypointIndex;
     public float waypointTolerance = 1f;
 
-    //Attacking
+    //Attacking logictics
     public float timeBetweenAttacks;
     bool alreadyAttacked;
     public float attackDamage = 2f;
@@ -41,6 +41,8 @@ public class WayPointAI : Actor
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
+
+        //Different states according to conditions 
         if (!playerInSightRange && !playerInAttackRange) Patroling();
         if (playerInSightRange && !playerInAttackRange) ChasePlayer();
         if (playerInSightRange && playerInAttackRange) AttackPlayer();
@@ -64,19 +66,20 @@ public class WayPointAI : Actor
 
     private void ChasePlayer()
     {
+        
         agent.SetDestination(player.position);
     }
 
     public void AttackPlayer()
     {
-        //Keep enemy still
+        //Keep enemy still when attacking Luna 
         agent.SetDestination(transform.position);
 
         transform.LookAt(player);
 
         if (!alreadyAttacked)
         {
-            //Attacking - deal damage directly instead of firing a projectile
+            //Attacking when Luna is within range 
             if (player != null)
             {
                 PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
@@ -98,6 +101,7 @@ public class WayPointAI : Actor
     {
         if (player != null)
         {
+            //When the enemy is destroyed, player gets awarded health 
             PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
             if (playerHealth != null)
                 playerHealth.AddHealth(healthRewardOnDeath);
