@@ -40173,8 +40173,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
-  currentHealth: 0
-  maxHealth: 0
+  currentHealth: 3
+  maxHealth: 3
   agent: {fileID: 0}
   player: {fileID: 1889850202}
   whatIsGround:
@@ -70887,8 +70887,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
-  currentHealth: 0
-  maxHealth: 0
+  currentHealth: 3
+  maxHealth: 3
   agent: {fileID: 0}
   player: {fileID: 1889850202}
   whatIsGround:
@@ -96111,8 +96111,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
-  currentHealth: 0
-  maxHealth: 0
+  currentHealth: 3
+  maxHealth: 3
   agent: {fileID: 0}
   player: {fileID: 1889850202}
   whatIsGround:
@@ -108483,7 +108483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
-  currentHealth: 0
+  currentHealth: 3
   maxHealth: 3
   agent: {fileID: 0}
   player: {fileID: 1889850202}
@@ -131207,8 +131207,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
-  currentHealth: 0
-  maxHealth: 0
+  currentHealth: 3
+  maxHealth: 3
   agent: {fileID: 0}
   player: {fileID: 1889850202}
   whatIsGround:
@@ -161293,8 +161293,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
-  currentHealth: 0
-  maxHealth: 0
+  currentHealth: 3
+  maxHealth: 3
   agent: {fileID: 0}
   player: {fileID: 1889850202}
   whatIsGround:
@@ -184713,8 +184713,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
-  currentHealth: 0
-  maxHealth: 0
+  currentHealth: 3
+  maxHealth: 3
   agent: {fileID: 0}
   player: {fileID: 1889850202}
   whatIsGround:
@@ -302536,8 +302536,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
-  currentHealth: 0
-  maxHealth: 0
+  currentHealth: 3
+  maxHealth: 3
   agent: {fileID: 0}
   player: {fileID: 1889850202}
   whatIsGround:
@@ -306598,8 +306598,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
-  currentHealth: 0
-  maxHealth: 0
+  currentHealth: 3
+  maxHealth: 3
   agent: {fileID: 0}
   player: {fileID: 1889850202}
   whatIsGround:
@@ -315381,8 +315381,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
-  currentHealth: 0
-  maxHealth: 0
+  currentHealth: 3
+  maxHealth: 3
   agent: {fileID: 0}
   player: {fileID: 1889850202}
   whatIsGround:
@@ -353966,8 +353966,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
-  currentHealth: 0
-  maxHealth: 0
+  currentHealth: 3
+  maxHealth: 3
   agent: {fileID: 0}
   player: {fileID: 1889850202}
   whatIsGround:
@@ -386712,8 +386712,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
-  currentHealth: 0
-  maxHealth: 0
+  currentHealth: 3
+  maxHealth: 3
   agent: {fileID: 0}
   player: {fileID: 1889850202}
   whatIsGround:
@@ -404016,8 +404016,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
-  currentHealth: 0
-  maxHealth: 0
+  currentHealth: 3
+  maxHealth: 3
   agent: {fileID: 0}
   player: {fileID: 1889850202}
   whatIsGround:
@@ -412733,8 +412733,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
-  currentHealth: 0
-  maxHealth: 0
+  currentHealth: 3
+  maxHealth: 3
   agent: {fileID: 0}
   player: {fileID: 1889850202}
   whatIsGround:
@@ -466126,8 +466126,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
-  currentHealth: 0
-  maxHealth: 0
+  currentHealth: 3
+  maxHealth: 3
   agent: {fileID: 0}
   player: {fileID: 1889850202}
   whatIsGround:
@@ -466312,8 +466312,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
-  currentHealth: 0
-  maxHealth: 0
+  currentHealth: 3
+  maxHealth: 3
   agent: {fileID: 0}
   player: {fileID: 1889850202}
   whatIsGround:
