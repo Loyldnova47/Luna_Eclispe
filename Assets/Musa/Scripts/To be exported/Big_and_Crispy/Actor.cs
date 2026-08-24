@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Actor : MonoBehaviour
 {
-    int currentHealth;
+    public int currentHealth;
     public int maxHealth;
 
     void Awake()
@@ -22,7 +22,7 @@ public class Actor : MonoBehaviour
         }
     }
 
-    void Death()
+    protected virtual void Death()
     {
         // Death function 
         // TEMPORARY: DESTROY OBJECT
