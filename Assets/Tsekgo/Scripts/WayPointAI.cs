@@ -8,10 +8,10 @@ public class WayPointAI : Actor
     public Transform player;
     public LayerMask whatIsGround, whatIsPlayer;
 
-    //Death reward
+    //Death reward to Luna for killing Glorp 
     public int healthRewardOnDeath = 2;
 
-    //Patroling 
+    //Patrolling 
     public Transform[] waypoints;
     private int currentWaypointIndex;
     public float waypointTolerance = 1f;
@@ -24,6 +24,7 @@ public class WayPointAI : Actor
     //States
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
+
 
     private void Awake()
     {

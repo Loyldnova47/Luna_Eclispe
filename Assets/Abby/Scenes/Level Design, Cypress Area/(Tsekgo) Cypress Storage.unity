@@ -40173,6 +40173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
+  currentHealth: 0
   maxHealth: 0
   agent: {fileID: 0}
   player: {fileID: 1889850202}
@@ -40322,6 +40323,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b63fb92c96366e4fa3b6161e6006672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Actor
+  currentHealth: 0
   maxHealth: 3
 --- !u!1 &226016578
 GameObject:
@@ -70882,6 +70884,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
+  currentHealth: 0
   maxHealth: 0
   agent: {fileID: 0}
   player: {fileID: 1889850202}
@@ -71031,6 +71034,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b63fb92c96366e4fa3b6161e6006672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Actor
+  currentHealth: 0
   maxHealth: 3
 --- !u!1 &371901260
 GameObject:
@@ -96104,6 +96108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
+  currentHealth: 0
   maxHealth: 0
   agent: {fileID: 0}
   player: {fileID: 1889850202}
@@ -96253,6 +96258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b63fb92c96366e4fa3b6161e6006672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Actor
+  currentHealth: 0
   maxHealth: 3
 --- !u!43 &469445901
 Mesh:
@@ -108374,7 +108380,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
-  maxHealth: 0
+  currentHealth: 0
+  maxHealth: 3
   agent: {fileID: 0}
   player: {fileID: 1889850202}
   whatIsGround:
@@ -108406,6 +108413,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b63fb92c96366e4fa3b6161e6006672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Actor
+  currentHealth: 3
   maxHealth: 3
 --- !u!1 &523836368
 GameObject:
@@ -131096,6 +131104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
+  currentHealth: 0
   maxHealth: 0
   agent: {fileID: 0}
   player: {fileID: 1889850202}
@@ -131245,6 +131254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b63fb92c96366e4fa3b6161e6006672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Actor
+  currentHealth: 0
   maxHealth: 3
 --- !u!43 &596036922
 Mesh:
@@ -161180,6 +161190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
+  currentHealth: 0
   maxHealth: 0
   agent: {fileID: 0}
   player: {fileID: 1889850202}
@@ -161327,6 +161338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b63fb92c96366e4fa3b6161e6006672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Actor
+  currentHealth: 0
   maxHealth: 3
 --- !u!1 &723445649
 GameObject:
@@ -184598,6 +184610,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
+  currentHealth: 0
   maxHealth: 0
   agent: {fileID: 0}
   player: {fileID: 1889850202}
@@ -184747,6 +184760,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b63fb92c96366e4fa3b6161e6006672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Actor
+  currentHealth: 0
   maxHealth: 3
 --- !u!1 &852260267
 GameObject:
@@ -302362,6 +302376,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
+  currentHealth: 0
   maxHealth: 0
   agent: {fileID: 0}
   player: {fileID: 1889850202}
@@ -302511,6 +302526,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b63fb92c96366e4fa3b6161e6006672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Actor
+  currentHealth: 0
   maxHealth: 3
 --- !u!1 &1354203959
 GameObject:
@@ -306422,6 +306438,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
+  currentHealth: 0
   maxHealth: 0
   agent: {fileID: 0}
   player: {fileID: 1889850202}
@@ -306573,6 +306590,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b63fb92c96366e4fa3b6161e6006672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Actor
+  currentHealth: 0
   maxHealth: 3
 --- !u!1 &1385514311
 GameObject:
@@ -315203,6 +315221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
+  currentHealth: 0
   maxHealth: 0
   agent: {fileID: 0}
   player: {fileID: 1889850202}
@@ -315350,6 +315369,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b63fb92c96366e4fa3b6161e6006672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Actor
+  currentHealth: 0
   maxHealth: 3
 --- !u!1 &1435963427
 GameObject:
@@ -353786,6 +353806,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
+  currentHealth: 0
   maxHealth: 0
   agent: {fileID: 0}
   player: {fileID: 1889850202}
@@ -353935,6 +353956,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b63fb92c96366e4fa3b6161e6006672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Actor
+  currentHealth: 0
   maxHealth: 3
 --- !u!43 &1641639159
 Mesh:
@@ -386530,6 +386552,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
+  currentHealth: 0
   maxHealth: 0
   agent: {fileID: 0}
   player: {fileID: 1889850202}
@@ -386679,6 +386702,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b63fb92c96366e4fa3b6161e6006672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Actor
+  currentHealth: 0
   maxHealth: 3
 --- !u!43 &1783522366
 Mesh:
@@ -403832,6 +403856,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
+  currentHealth: 0
   maxHealth: 0
   agent: {fileID: 0}
   player: {fileID: 1889850202}
@@ -412489,6 +412514,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
+  currentHealth: 0
   maxHealth: 0
   agent: {fileID: 0}
   player: {fileID: 1889850202}
@@ -412638,6 +412664,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b63fb92c96366e4fa3b6161e6006672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Actor
+  currentHealth: 0
   maxHealth: 3
 --- !u!43 &1905755522
 Mesh:
@@ -465880,6 +465907,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
+  currentHealth: 0
   maxHealth: 0
   agent: {fileID: 0}
   player: {fileID: 1889850202}
@@ -466029,6 +466057,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b63fb92c96366e4fa3b6161e6006672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Actor
+  currentHealth: 0
   maxHealth: 3
 --- !u!1 &2114454440
 GameObject:
@@ -466064,6 +466093,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointAI
+  currentHealth: 0
   maxHealth: 0
   agent: {fileID: 0}
   player: {fileID: 1889850202}
@@ -466213,6 +466243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b63fb92c96366e4fa3b6161e6006672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Actor
+  currentHealth: 0
   maxHealth: 3
 --- !u!1 &2114950178
 GameObject:
