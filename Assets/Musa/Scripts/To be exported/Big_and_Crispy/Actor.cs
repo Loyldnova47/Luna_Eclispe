@@ -22,7 +22,7 @@ public class Actor : MonoBehaviour
         }
     }
 
-    void Death()
+    protected virtual void Death()
     {
         // Death function 
         // TEMPORARY: DESTROY OBJECT

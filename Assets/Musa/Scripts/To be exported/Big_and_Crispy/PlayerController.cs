@@ -202,7 +202,11 @@ public class PlayerController : MonoBehaviour
         audioSource.pitch = 1;
         audioSource.PlayOneShot(hitSound);
 
+        if (hitEffect !=null)
+        {
+
         GameObject GO = Instantiate(hitEffect, pos, Quaternion.identity);
         Destroy(GO, 20);
+        }
     }
 }

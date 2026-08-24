@@ -1,13 +1,15 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class WayPointAI : MonoBehaviour
+public class WayPointAI : Actor
 
 {
     public NavMeshAgent agent;
     public Transform player;
     public LayerMask whatIsGround, whatIsPlayer;
-    public float health;
+
+    //Death reward
+    public int healthRewardOnDeath = 2;
 
     //Patroling 
     public Transform[] waypoints;
@@ -17,7 +19,7 @@ public class WayPointAI : MonoBehaviour
     //Attacking
     public float timeBetweenAttacks;
     bool alreadyAttacked;
-    public GameObject projectile;
+    public float attackDamage = 2f;
 
     //States
     public float sightRange, attackRange;
@@ -73,11 +75,13 @@ public class WayPointAI : MonoBehaviour
 
         if (!alreadyAttacked)
         {
-            //Attacking
-            Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-
-            rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
-            rb.AddForce(transform.up * 8f, ForceMode.Impulse);
+            //Attacking - deal damage directly instead of firing a projectile
+            if (player != null)
+            {
+                PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
+                if (playerHealth != null)
+                    playerHealth.TakeDamage(attackDamage);
+            }
 
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
@@ -89,16 +93,16 @@ public class WayPointAI : MonoBehaviour
         alreadyAttacked = false;
     }
 
-    public void TakeDamage(int damage)
+    protected override void Death()
     {
-        health -= damage;
+        if (player != null)
+        {
+            PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
+            if (playerHealth != null)
+                playerHealth.AddHealth(healthRewardOnDeath);
+        }
 
-        if (health <= 0) Invoke(nameof(DestroyEnemy), 0.5f);
-    }
-
-    public void DestroyEnemy()
-    {
-        Destroy(gameObject);
+        base.Death();
     }
 
     public void OnDrawGizmosSelected()
