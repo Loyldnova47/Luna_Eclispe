@@ -10,8 +10,8 @@ public class Door : MonoBehaviour
     public Transform rightDoor;
 
     [Header("Movement")] // Positioning of Doors and their movement speed 
-    public Vector3 leftOpenOffset = new Vector3(-81.1f,1.52f,-16.35f);
-    public Vector3 rightOpenOffset = new Vector3(-76.64f,1.52f,-16.35f);
+    public Vector3 leftOpenOffset = new Vector3(-81.1f, 1.52f, -16.35f);
+    public Vector3 rightOpenOffset = new Vector3(-76.64f, 1.52f, -16.35f);
     public float slideSpeed = 3f;
     private Vector3 leftClosedPos;
     private Vector3 rightClosedPos;
