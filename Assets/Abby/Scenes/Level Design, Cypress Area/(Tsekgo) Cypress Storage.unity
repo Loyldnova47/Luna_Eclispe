@@ -57701,7 +57701,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1330490601}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 22b82b7e351b49c4394882a3c4991de7, type: 3}
   m_Name: 
@@ -57717,7 +57717,7 @@ MonoBehaviour:
   health: 0
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 25
-  timeBetweenAttacks: 3
+  timeBetweenAttacks: 6
   projectile: {fileID: 3126767275594646134, guid: 4a2e589c968c83c4da73eb4bd7ce9c72, type: 3}
   sightRange: 8
   attackRange: 6
@@ -57847,7 +57847,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1330490601}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6a1cb803c87e5ae42b1d57cb5d4f976f, type: 3}
   m_Name: 
