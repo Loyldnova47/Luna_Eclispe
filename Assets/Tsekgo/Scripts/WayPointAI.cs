@@ -25,9 +25,9 @@ public class WayPointAI : MonoBehaviour
 
     private void Awake()
     {
-        GameObject playerObj = GameObject.Find("PlayerObj");
-        if (playerObj != null)
-            player = playerObj.transform;
+        GameObject Luna = GameObject.Find("Luna");
+        if (Luna != null)
+            player = Luna.transform;
 
         agent = GetComponent<NavMeshAgent>();
     }
