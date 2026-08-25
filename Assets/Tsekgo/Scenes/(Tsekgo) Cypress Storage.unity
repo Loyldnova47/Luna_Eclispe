@@ -59395,9 +59395,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4660125575897392925, guid: 7d2d4d35a62c8c44faefa8f0044f8817, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1889850203}
-    - targetCorrespondingSourceObject: {fileID: 4660125575897392925, guid: 7d2d4d35a62c8c44faefa8f0044f8817, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1889850210}
   m_SourcePrefab: {fileID: 100100000, guid: 7d2d4d35a62c8c44faefa8f0044f8817, type: 3}
 --- !u!1 &329215064 stripped
 GameObject:
@@ -104426,6 +104423,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 995205347201216395, guid: b1eea388df9068e42b85ee75d01ef41e, type: 3}
+      propertyPath: subButtons.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 995205347201216395, guid: b1eea388df9068e42b85ee75d01ef41e, type: 3}
+      propertyPath: 'subButtons.Array.data[9]'
+      value: 
+      objectReference: {fileID: 520055375}
+    - target: {fileID: 1083828631345102800, guid: b1eea388df9068e42b85ee75d01ef41e, type: 3}
+      propertyPath: m_text
+      value: 'Esc = Quit
+
+'
+      objectReference: {fileID: 0}
     - target: {fileID: 7066802307690369935, guid: b1eea388df9068e42b85ee75d01ef41e, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -104514,6 +104525,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1855976187}
   m_SourcePrefab: {fileID: 100100000, guid: b1eea388df9068e42b85ee75d01ef41e, type: 3}
+--- !u!1 &520055375 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9001249484509595096, guid: b1eea388df9068e42b85ee75d01ef41e, type: 3}
+  m_PrefabInstance: {fileID: 520055374}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &520061679
 GameObject:
   m_ObjectHideFlags: 0
@@ -224381,6 +224397,51 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
+--- !u!1 &1059284760
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1059284762}
+  - component: {fileID: 1059284761}
+  m_Layer: 0
+  m_Name: ExitGameHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1059284761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1059284760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c571aa2178e14d4cb7059bd77c044f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ExitGame
+  quitKey: 60
+--- !u!4 &1059284762
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1059284760}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 644.6494, y: -0, z: 7305.054}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1059782951
 GameObject:
   m_ObjectHideFlags: 0
@@ -411387,33 +411448,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
   maxHealth: 10
   health: 10
---- !u!54 &1889850210
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 329215064}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!43 &1891724590
 Mesh:
   m_ObjectHideFlags: 0
@@ -473782,3 +473816,4 @@ SceneRoots:
   - {fileID: 1442910589}
   - {fileID: 595660388}
   - {fileID: 1796023653}
+  - {fileID: 1059284762}
