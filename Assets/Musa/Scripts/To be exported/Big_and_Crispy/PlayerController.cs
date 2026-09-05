@@ -27,6 +27,9 @@ public class PlayerController : MonoBehaviour
 
     float xRotation = 0f;
 
+    // Added a refrenece to lock actions when load
+    private bool isDead = false;
+
     void Awake()
     {
         controller = GetComponent<CharacterController>();
@@ -43,11 +46,9 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        isGrounded = controller.isGrounded;
+        if(isDead) return; // If the player is dead, skip the update)
 
-        // Repeat Inputs
-        if (input.Attack.IsPressed())
-        { Attack(); }
+        isGrounded = controller.isGrounded;
 
         SetAnimations();
     }
@@ -58,16 +59,47 @@ public class PlayerController : MonoBehaviour
     void LateUpdate()
     { LookInput(input.Look.ReadValue<Vector2>()); }
 
-    void MoveInput(Vector2 input)
+    public void DisableControllerOnDeath()
+    {
+        isDead = true;
+        input.Disable(); // Completely shuts off input processing
+        _PlayerVelocity = Vector3.zero; // Wipes existing momentum
+    }
+
+    public void EnableControllerOnRespawn()
+    {
+        isDead = false;
+        input.Enable(); // Re-enables input processing
+        _PlayerVelocity = Vector3.zero; // Wipes existing momentum
+        xRotation = 0f; // Resets camera rotation
+    }
+
+    void MoveInput(Vector2 inputMovement)
     {
         Vector3 moveDirection = Vector3.zero;
-        moveDirection.x = input.x;
-        moveDirection.z = input.y;
 
-        controller.Move(transform.TransformDirection(moveDirection) * moveSpeed * Time.deltaTime);
+        // If you are swinging, ignore your keyboard movement
+        if (!attacking)
+        {
+            moveDirection.x = inputMovement.x;
+            moveDirection.z = inputMovement.y;
+            moveDirection = transform.TransformDirection(moveDirection) * moveSpeed;
+        }
+        //else
+        //{
+        //    // Lock movement into a physical forward lunge thrust instead
+        //    moveDirection = transform.forward * currentLungeSpeed;
+        //    // Smoothly reduce the lunge speed over time so the thrust naturally fades
+        //    currentLungeSpeed = Mathf.Lerp(currentLungeSpeed, 0f, Time.deltaTime * lungeDamping);
+        //}
+
+        controller.Move(moveDirection * Time.deltaTime);
+
+        // Handle Gravity
         _PlayerVelocity.y += gravity * Time.deltaTime;
         if (isGrounded && _PlayerVelocity.y < 0)
             _PlayerVelocity.y = -2f;
+
         controller.Move(_PlayerVelocity * Time.deltaTime);
     }
 
@@ -85,13 +117,15 @@ public class PlayerController : MonoBehaviour
     }
 
     void OnEnable()
-    { input.Enable(); }
+    { if (!isDead) input.Enable(); }
 
     void OnDisable()
-    { input.Disable(); }
+    { if (!isDead) input.Disable(); }
 
     void Jump()
     {
+        if (isGrounded || attacking) return;
+
         // Adds force to the player rigidbody to jump
         if (isGrounded)
             _PlayerVelocity.y = Mathf.Sqrt(jumpHeight * -3.0f * gravity);
@@ -100,7 +134,7 @@ public class PlayerController : MonoBehaviour
     void AssignInputs()
     {
         input.Jump.performed += ctx => Jump();
-        input.Attack.started += ctx => Attack();
+        input.Attack.performed += ctx => Attack();
     }
 
     // ---------- //
@@ -110,7 +144,6 @@ public class PlayerController : MonoBehaviour
     public const string IDLE = "Idle";
     public const string WALK = "Walk";
     public const string ATTACK1 = "Attack 1";
-    public const string ATTACK2 = "Attack 2";
 
     string currentAnimationState;
 
@@ -121,7 +154,7 @@ public class PlayerController : MonoBehaviour
 
         // PLAY THE ANIMATION //
         currentAnimationState = newState;
-        animator.CrossFadeInFixedTime(currentAnimationState, 0.2f);
+        animator.CrossFadeInFixedTime(currentAnimationState, 0.0f, 0, 0f);
     }
 
     void SetAnimations()
@@ -140,20 +173,35 @@ public class PlayerController : MonoBehaviour
     // ATTACKING BEHAVIOUR //
     // ------------------- //
 
-    [Header("Attacking")]
+    [Header("Attacking Timing")]
+    [Tooltip("Delay between pressing the key and the weapon striking the target (in seconds). Set to 0 for instant hits.")]
+    public float damageRegistryDelay = 0.2f;
+
+    [Tooltip("Total duration of the attack animation (in seconds). This should match the length of the attack animation.")]
+    public float totalAttackDuration = 0.6f;
+    [Tooltip("Distance the attack can reach.")]
     public float attackDistance = 3f;
+    [Tooltip("Delay before the attack can be performed again (in seconds).")]
     public float attackDelay = 0.4f;
+    [Tooltip("Speed of the attack animation.")]
     public float attackSpeed = 1f;
+    [Tooltip("Amount of damage the attack deals.")]
     public int attackDamage = 1;
+    [Tooltip("Layers that the attack can hit.")]
     public LayerMask attackLayer;
 
     public GameObject hitEffect;
     public AudioClip swordSwing;
     public AudioClip hitSound;
 
+    //public float lungeForce = 4f; // The initial speed of the lunge
+   // public float lungeDamping = 5f; // How quickly the lunge speed decreases over time
+
     bool attacking = false;
     bool readyToAttack = true;
     int attackCount;
+
+   //private float currentLungeSpeed = 0f;
 
     public void Attack()
     {
@@ -162,22 +210,17 @@ public class PlayerController : MonoBehaviour
         readyToAttack = false;
         attacking = true;
 
-        Invoke(nameof(ResetAttack), attackSpeed);
-        Invoke(nameof(AttackRaycast), attackDelay);
+       // currentLungeSpeed = lungeForce; // Set the lunge speed for this attack
 
         audioSource.pitch = Random.Range(0.9f, 1.1f);
         audioSource.PlayOneShot(swordSwing);
 
-        if (attackCount == 0)
-        {
-            ChangeAnimationState(ATTACK1);
-            attackCount++;
-        }
-        else
-        {
-            ChangeAnimationState(ATTACK2);
-            attackCount = 0;
-        }
+        ChangeAnimationState(ATTACK1);
+
+        Invoke(nameof(AttackRaycast), damageRegistryDelay);
+        Invoke(nameof(ResetAttack), totalAttackDuration); 
+
+   
     }
 
     void ResetAttack()
@@ -206,7 +249,7 @@ public class PlayerController : MonoBehaviour
         {
 
         GameObject GO = Instantiate(hitEffect, pos, Quaternion.identity);
-        Destroy(GO, 20);
+        Destroy(GO, 2f);
         }
     }
 }

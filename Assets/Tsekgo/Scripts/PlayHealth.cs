@@ -14,12 +14,15 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private float respawnDelay = 3f; // Delay before respawning after death
     private Vector3 startPosition;
     private CharacterController controller;
+
+    private PlayerController playerMovement;
     private bool isDead = false;
 
     void Awake()
     {
         startPosition = transform.position;
         controller = GetComponent<CharacterController>();
+        playerMovement = GetComponent<PlayerController>(); // Reference to the PlayerController script
 
         // Ensure the death screen UI is initially inactive
         if (deathScreenUI != null)
@@ -78,6 +81,11 @@ public class PlayerHealth : MonoBehaviour
         // Optionally, you can also disable player controls here
         // For example, if you have a PlayerController script, you can disable it:
         // GetComponent<PlayerController>().enabled = false;
+       
+        // Lock movement and camera inputs immediately 
+        if (playerMovement != null)
+            playerMovement.DisableControllerOnDeath();
+
         Time.timeScale = 0f; // Pause the game
         
         StartCoroutine(RespawnCountdown());
@@ -118,7 +126,11 @@ public class PlayerHealth : MonoBehaviour
 
         if (controller != null)
             controller.enabled = true;
-       
+
+        // Unlock movement and camera inputs once responsive
+        if (playerMovement != null)
+            playerMovement.EnableControllerOnRespawn();
+
         // Reset heatlth status varaibles 
         health = maxHealth;
         isDead = false;
