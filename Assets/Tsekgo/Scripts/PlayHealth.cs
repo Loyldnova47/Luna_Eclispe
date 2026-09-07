@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
-
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class PlayerHealth : MonoBehaviour
 
     [Header("UI References")]
     [SerializeField] private GameObject deathScreenUI;
+    [SerializeField] private UnityEngine.UI.Slider healthSlider; // Slot for your layout UI slider
 
     [Header("Settings")]
     [SerializeField] private float respawnDelay = 3f; // Delay before respawning after death
@@ -31,16 +33,35 @@ public class PlayerHealth : MonoBehaviour
         Debug.Log($"<color=cyan>[PlayerHealth]</color> Initialized. Starting Position: {startPosition}. Health: {health}/{maxHealth}");
     }
 
+    void Start()
+    {
+        // Initialize health to maxHealth at the start
+        health = maxHealth;
+        // Update the health slider if it's assigned
+        if (healthSlider != null)
+        {
+            healthSlider.minValue = 0f;
+            healthSlider.maxValue = maxHealth;
+            healthSlider.value = health;
+        }
+    }
+           
 
     public void AddHealth(float amount)
     {
+        // Safe-check to ensure we don't heal a dead player
+        if (amount < 0) amount = Mathf.Abs(amount);
+
         float oldHealth = health;
-        health += amount;
+
 
         //    if (health > maxHealth)
         //        health = maxHealth;
 
        health = Mathf.Clamp(health + amount, 0f, maxHealth);
+
+        if (healthSlider != null)
+            healthSlider.value = health;
 
         Debug.Log($"<color=green>[PlayerHealth] HEALED!</color> Gained +{amount} HP. Health: {oldHealth} -> {health}/{maxHealth}");
     }
@@ -58,6 +79,9 @@ public class PlayerHealth : MonoBehaviour
         float oldHealth = health; 
         health -= damage;
 
+        //Force update the health slider if it's assigned
+        if (healthSlider != null)
+            healthSlider.value = health;
         // This will now always be the only message on screen!
         Debug.Log($"<color=orange>[PlayerHealth] DAMAGE TAKEN!</color> Lost -{damage} HP. Health: {oldHealth} -> {Mathf.Max(0, health)}/{maxHealth}");
 
@@ -133,16 +157,19 @@ public class PlayerHealth : MonoBehaviour
 
         // Reset heatlth status varaibles 
         health = maxHealth;
+        if (healthSlider != null)
+            healthSlider.value = health;
+
         isDead = false;
 
         // Hide the death screen UI
-        if (deathScreenUI != null)
-            deathScreenUI.SetActive(false);
+        //if (deathScreenUI != null)
+        //    deathScreenUI.SetActive(false);
 
-        health = maxHealth;
-        isDead = false;
+        //health = maxHealth;
+        //isDead = false;
 
-        if (deathScreenUI != null && deathScreenUI.activeSelf)
-            deathScreenUI.SetActive(true);
+        //if (deathScreenUI != null && deathScreenUI.activeSelf)
+        //    deathScreenUI.SetActive(true);
     }
 }
