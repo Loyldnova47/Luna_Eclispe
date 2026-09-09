@@ -25,10 +25,15 @@ public class PlayerController : MonoBehaviour
     public Camera cam;
     public float sensitivity;
 
+    [Header("Pause Settings UI")]
+    [SerializeField]private GameObject pauseMenuUI;
+
     float xRotation = 0f;
 
     // Added a refrenece to lock actions when load
     private bool isDead = false;
+
+    private bool isPaused = false;
 
     void Awake()
     {
@@ -42,6 +47,10 @@ public class PlayerController : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        // Ensure the pause menu starts hidden
+        if (pauseMenuUI != null)
+            pauseMenuUI.SetActive(false);
     }
 
     void Update()
@@ -135,6 +144,46 @@ public class PlayerController : MonoBehaviour
     {
         input.Jump.performed += ctx => Jump();
         input.Attack.performed += ctx => Attack();
+
+        // Listen for your new Escape button press action map event
+        input.Pause.performed += ctx => TogglePause();
+    }
+
+    public void TogglePause()
+    {
+        if (isDead) return;
+
+        isPaused = !isPaused;
+
+        if (isPaused)
+        {
+            Time.timeScale = 0f; 
+
+            if (pauseMenuUI != null)
+                pauseMenuUI.SetActive(true);
+
+            //Unlock and reveal mouse cursor options
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
+            Debug.Log("<color=yellow>[PlayerController]</color> Game Paused.");
+        }
+        else
+        {
+            // Resume the game simulation status path
+            ResumeGame();
+        }
+    }
+
+    public void ResumeGame()
+    {
+        Time.timeScale = 1f;
+        if (pauseMenuUI != null)
+            pauseMenuUI.SetActive(false);
+        // Lock and hide mouse cursor options
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        Debug.Log("<color=yellow>[PlayerController]</color> Game Resumed.");
     }
 
     // ---------- //
