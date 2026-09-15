@@ -40154,7 +40154,7 @@ GameObject:
   - component: {fileID: 225775590}
   - component: {fileID: 225775589}
   - component: {fileID: 225775596}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy3
   m_TagString: Hittable
   m_Icon: {fileID: 0}
@@ -40264,7 +40264,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 1d0984fd5abaa574e815948abf4f7e1b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -40323,7 +40323,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b63fb92c96366e4fa3b6161e6006672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Actor
-  currentHealth: 0
+  currentHealth: 3
   maxHealth: 3
 --- !u!1 &226016578
 GameObject:
@@ -70868,7 +70868,7 @@ GameObject:
   - component: {fileID: 371712577}
   - component: {fileID: 371712576}
   - component: {fileID: 371712583}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy2
   m_TagString: Hittable
   m_Icon: {fileID: 0}
@@ -70978,7 +70978,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 1d0984fd5abaa574e815948abf4f7e1b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -71037,7 +71037,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b63fb92c96366e4fa3b6161e6006672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Actor
-  currentHealth: 0
+  currentHealth: 3
   maxHealth: 3
 --- !u!1 &371901260
 GameObject:
@@ -96092,7 +96092,7 @@ GameObject:
   - component: {fileID: 466573075}
   - component: {fileID: 466573074}
   - component: {fileID: 466573081}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy8
   m_TagString: Hittable
   m_Icon: {fileID: 0}
@@ -96202,7 +96202,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 1d0984fd5abaa574e815948abf4f7e1b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -96261,7 +96261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b63fb92c96366e4fa3b6161e6006672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Actor
-  currentHealth: 0
+  currentHealth: 3
   maxHealth: 3
 --- !u!43 &469445901
 Mesh:
@@ -108402,7 +108402,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 1d0984fd5abaa574e815948abf4f7e1b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -131188,7 +131188,7 @@ GameObject:
   - component: {fileID: 595660383}
   - component: {fileID: 595660382}
   - component: {fileID: 595660389}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy17
   m_TagString: Hittable
   m_Icon: {fileID: 0}
@@ -131298,7 +131298,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 1d0984fd5abaa574e815948abf4f7e1b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -131357,7 +131357,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b63fb92c96366e4fa3b6161e6006672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Actor
-  currentHealth: 0
+  currentHealth: 3
   maxHealth: 3
 --- !u!43 &596036922
 Mesh:
@@ -161274,7 +161274,7 @@ GameObject:
   - component: {fileID: 722715273}
   - component: {fileID: 722715272}
   - component: {fileID: 722715279}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy12
   m_TagString: Hittable
   m_Icon: {fileID: 0}
@@ -161382,7 +161382,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 1d0984fd5abaa574e815948abf4f7e1b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -161441,7 +161441,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b63fb92c96366e4fa3b6161e6006672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Actor
-  currentHealth: 0
+  currentHealth: 3
   maxHealth: 3
 --- !u!1 &723445649
 GameObject:
@@ -184694,7 +184694,7 @@ GameObject:
   - component: {fileID: 850838817}
   - component: {fileID: 850838816}
   - component: {fileID: 850838823}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy5
   m_TagString: Hittable
   m_Icon: {fileID: 0}
@@ -184804,7 +184804,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 1d0984fd5abaa574e815948abf4f7e1b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -184863,7 +184863,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b63fb92c96366e4fa3b6161e6006672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Actor
-  currentHealth: 0
+  currentHealth: 3
   maxHealth: 3
 --- !u!1 &852260267
 GameObject:
@@ -302517,7 +302517,7 @@ GameObject:
   - component: {fileID: 1354046831}
   - component: {fileID: 1354046830}
   - component: {fileID: 1354046837}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy14
   m_TagString: Hittable
   m_Icon: {fileID: 0}
@@ -302627,7 +302627,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 1d0984fd5abaa574e815948abf4f7e1b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -302686,7 +302686,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b63fb92c96366e4fa3b6161e6006672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Actor
-  currentHealth: 0
+  currentHealth: 3
   maxHealth: 3
 --- !u!1 &1354203959
 GameObject:
@@ -306579,7 +306579,7 @@ GameObject:
   - component: {fileID: 1380626937}
   - component: {fileID: 1380626936}
   - component: {fileID: 1380626943}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy9
   m_TagString: Hittable
   m_Icon: {fileID: 0}
@@ -306691,7 +306691,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 1d0984fd5abaa574e815948abf4f7e1b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -306750,7 +306750,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b63fb92c96366e4fa3b6161e6006672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Actor
-  currentHealth: 0
+  currentHealth: 3
   maxHealth: 3
 --- !u!1 &1385514311
 GameObject:
@@ -315362,7 +315362,7 @@ GameObject:
   - component: {fileID: 1435604894}
   - component: {fileID: 1435604893}
   - component: {fileID: 1435604900}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy16
   m_TagString: Hittable
   m_Icon: {fileID: 0}
@@ -315470,7 +315470,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 1d0984fd5abaa574e815948abf4f7e1b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -315529,7 +315529,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b63fb92c96366e4fa3b6161e6006672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Actor
-  currentHealth: 0
+  currentHealth: 3
   maxHealth: 3
 --- !u!1 &1435963427
 GameObject:
@@ -353947,7 +353947,7 @@ GameObject:
   - component: {fileID: 1638214832}
   - component: {fileID: 1638214831}
   - component: {fileID: 1638214838}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy11
   m_TagString: Hittable
   m_Icon: {fileID: 0}
@@ -354057,7 +354057,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 1d0984fd5abaa574e815948abf4f7e1b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -354116,7 +354116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b63fb92c96366e4fa3b6161e6006672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Actor
-  currentHealth: 0
+  currentHealth: 3
   maxHealth: 3
 --- !u!43 &1641639159
 Mesh:
@@ -386693,7 +386693,7 @@ GameObject:
   - component: {fileID: 1779361648}
   - component: {fileID: 1779361647}
   - component: {fileID: 1779361654}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy6
   m_TagString: Hittable
   m_Icon: {fileID: 0}
@@ -386803,7 +386803,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 1d0984fd5abaa574e815948abf4f7e1b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -386862,7 +386862,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b63fb92c96366e4fa3b6161e6006672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Actor
-  currentHealth: 0
+  currentHealth: 3
   maxHealth: 3
 --- !u!43 &1783522366
 Mesh:
@@ -403994,10 +403994,10 @@ GameObject:
   - component: {fileID: 1847480726}
   - component: {fileID: 1847480725}
   - component: {fileID: 1847480724}
-  - component: {fileID: 1847480723}
   - component: {fileID: 1847480722}
   - component: {fileID: 1847480721}
-  m_Layer: 0
+  - component: {fileID: 1847480728}
+  m_Layer: 7
   m_Name: Enemy13
   m_TagString: Hittable
   m_Icon: {fileID: 0}
@@ -404057,35 +404057,6 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &1847480723
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1847480720}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22b82b7e351b49c4394882a3c4991de7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyAi
-  agent: {fileID: 0}
-  player: {fileID: 1889850202}
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 8
-  whatIsPlayer:
-    serializedVersion: 2
-    m_Bits: 64
-  health: 0
-  walkPoint: {x: 0, y: 0, z: 0}
-  walkPointRange: 5
-  timeBetweenAttacks: 4
-  projectile: {fileID: 1589497741128593148, guid: cb03e052659227c47b504a6257d977c8, type: 3}
-  sightRange: 6
-  attackRange: 4
-  playerInSightRange: 0
-  playerInAttackRange: 0
 --- !u!136 &1847480724
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -404134,7 +404105,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 1d0984fd5abaa574e815948abf4f7e1b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -404181,6 +404152,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1847480728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847480720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b63fb92c96366e4fa3b6161e6006672, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Actor
+  currentHealth: 3
+  maxHealth: 3
 --- !u!43 &1853134329
 Mesh:
   m_ObjectHideFlags: 0
@@ -412714,7 +412699,7 @@ GameObject:
   - component: {fileID: 1905340944}
   - component: {fileID: 1905340943}
   - component: {fileID: 1905340950}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy4
   m_TagString: Hittable
   m_Icon: {fileID: 0}
@@ -412824,7 +412809,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 1d0984fd5abaa574e815948abf4f7e1b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -412883,7 +412868,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b63fb92c96366e4fa3b6161e6006672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Actor
-  currentHealth: 0
+  currentHealth: 3
   maxHealth: 3
 --- !u!43 &1905755522
 Mesh:
@@ -466107,7 +466092,7 @@ GameObject:
   - component: {fileID: 2113862300}
   - component: {fileID: 2113862299}
   - component: {fileID: 2113862306}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy7
   m_TagString: Hittable
   m_Icon: {fileID: 0}
@@ -466217,7 +466202,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 1d0984fd5abaa574e815948abf4f7e1b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -466276,7 +466261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b63fb92c96366e4fa3b6161e6006672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Actor
-  currentHealth: 0
+  currentHealth: 3
   maxHealth: 3
 --- !u!1 &2114454440
 GameObject:
@@ -466293,7 +466278,7 @@ GameObject:
   - component: {fileID: 2114454442}
   - component: {fileID: 2114454441}
   - component: {fileID: 2114454448}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy15
   m_TagString: Hittable
   m_Icon: {fileID: 0}
@@ -466403,7 +466388,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 1d0984fd5abaa574e815948abf4f7e1b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -466462,7 +466447,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b63fb92c96366e4fa3b6161e6006672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Actor
-  currentHealth: 0
+  currentHealth: 3
   maxHealth: 3
 --- !u!1 &2114950178
 GameObject:
