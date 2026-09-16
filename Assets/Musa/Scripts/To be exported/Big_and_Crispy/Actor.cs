@@ -7,12 +7,12 @@ public class Actor : MonoBehaviour
     public int currentHealth;
     public int maxHealth;
 
-    void Awake()
+    protected virtual void Awake()
     {
         currentHealth = maxHealth;
     }
 
-    public void TakeDamage(int amount)
+    public virtual void TakeDamage(int amount)
     {
         currentHealth -= amount;
 

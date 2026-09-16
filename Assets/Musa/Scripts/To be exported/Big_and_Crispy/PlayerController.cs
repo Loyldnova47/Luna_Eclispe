@@ -26,14 +26,18 @@ public class PlayerController : MonoBehaviour
     public float sensitivity;
 
     [Header("Pause Settings UI")]
-    [SerializeField]private GameObject pauseMenuUI;
+    [SerializeField] private GameObject pauseMenuUI;
 
     float xRotation = 0f;
 
-    // Added a refrenece to lock actions when load
+    // Added a reference to lock actions when loaded
     private bool isDead = false;
-
     private bool isPaused = false;
+
+    // Player health values since player doesn't inherit from Actor
+    [Header("Player Health System")]
+    public int playerCurrentHealth = 100;
+    public int playerMaxHealth = 100;
 
     void Awake()
     {
@@ -55,7 +59,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if(isDead) return; // If the player is dead, skip the update)
+        if (isDead) return; // If the player is dead, skip the update
 
         isGrounded = controller.isGrounded;
 
@@ -94,13 +98,6 @@ public class PlayerController : MonoBehaviour
             moveDirection.z = inputMovement.y;
             moveDirection = transform.TransformDirection(moveDirection) * moveSpeed;
         }
-        //else
-        //{
-        //    // Lock movement into a physical forward lunge thrust instead
-        //    moveDirection = transform.forward * currentLungeSpeed;
-        //    // Smoothly reduce the lunge speed over time so the thrust naturally fades
-        //    currentLungeSpeed = Mathf.Lerp(currentLungeSpeed, 0f, Time.deltaTime * lungeDamping);
-        //}
 
         controller.Move(moveDirection * Time.deltaTime);
 
@@ -133,11 +130,10 @@ public class PlayerController : MonoBehaviour
 
     void Jump()
     {
-        if (isGrounded || attacking) return;
+        if (!isGrounded || attacking) return;
 
         // Adds force to the player rigidbody to jump
-        if (isGrounded)
-            _PlayerVelocity.y = Mathf.Sqrt(jumpHeight * -3.0f * gravity);
+        _PlayerVelocity.y = Mathf.Sqrt(jumpHeight * -3.0f * gravity);
     }
 
     void AssignInputs()
@@ -157,7 +153,7 @@ public class PlayerController : MonoBehaviour
 
         if (isPaused)
         {
-            Time.timeScale = 0f; 
+            Time.timeScale = 0f;
 
             if (pauseMenuUI != null)
                 pauseMenuUI.SetActive(true);
@@ -243,14 +239,8 @@ public class PlayerController : MonoBehaviour
     public AudioClip swordSwing;
     public AudioClip hitSound;
 
-    //public float lungeForce = 4f; // The initial speed of the lunge
-   // public float lungeDamping = 5f; // How quickly the lunge speed decreases over time
-
     bool attacking = false;
     bool readyToAttack = true;
-    int attackCount;
-
-   //private float currentLungeSpeed = 0f;
 
     public void Attack()
     {
@@ -259,19 +249,50 @@ public class PlayerController : MonoBehaviour
         readyToAttack = false;
         attacking = true;
 
-       // currentLungeSpeed = lungeForce; // Set the lunge speed for this attack
-
         audioSource.pitch = Random.Range(0.9f, 1.1f);
         audioSource.PlayOneShot(swordSwing);
 
         ChangeAnimationState(ATTACK1);
 
-        Invoke(nameof(AttackRaycast), damageRegistryDelay);
-        Invoke(nameof(ResetAttack), totalAttackDuration); 
-
-   
+        StartCoroutine(AttackTimingRoutine());
+        Invoke(nameof(ResetAttack), totalAttackDuration);
     }
 
+    private IEnumerator AttackTimingRoutine()
+    {
+        // Wait for your hit timing delay window
+        yield return new WaitForSeconds(damageRegistryDelay);
+
+        Debug.Log("<color=cyan>[Raycast Test]</color> AttackRaycast function fired!");
+        Debug.DrawRay(cam.transform.position, cam.transform.forward * attackDistance, Color.green, 2.0f);
+
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, attackDistance, attackLayer))
+        {
+            Debug.Log($"<color=green>[Raycast Test]</color> Raycast physically HIT: {hit.transform.name}");
+            HitTarget(hit.point);
+
+            // FIX: Try to grab EnemyAI directly first to force the glow execution path
+            if (hit.transform.TryGetComponent<EnemyAI>(out EnemyAI enemy))
+            {
+                Debug.Log("<color=orange>[Raycast Test]</color> Custom EnemyAI component matched! Forcing Neon Glow...");
+                enemy.TakeDamage(attackDamage);
+            }
+            // Fallback in case it's a generic actor target
+            else if (hit.transform.TryGetComponent<Actor>(out Actor T))
+            {
+                Debug.Log("<color=yellow>[Raycast Test]</color> Generic Actor component matched. Running standard damage loop.");
+                T.TakeDamage(attackDamage);
+            }
+            else
+            {
+                Debug.LogWarning($"<color=red>[Raycast Test]</color> Hit {hit.transform.name}, but it lacks an EnemyAI or Actor component!");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("<color=yellow>[Raycast Test]</color> Raycast missed. Ensure your enemy's Layer matches the Attack Layer mask!");
+        }
+    }
     void ResetAttack()
     {
         attacking = false;
@@ -280,25 +301,76 @@ public class PlayerController : MonoBehaviour
 
     void AttackRaycast()
     {
+        Debug.Log("<color=cyan>[Raycast Test]</color> AttackRaycast function fired!");
+
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, attackDistance, attackLayer))
         {
+            Debug.Log($"<color=green>[Raycast Test]</color> Raycast physically HIT: {hit.transform.name}");
             HitTarget(hit.point);
 
             if (hit.transform.TryGetComponent<Actor>(out Actor T))
-            { T.TakeDamage(attackDamage); }
+            {
+                Debug.Log("<color=orange>[Raycast Test]</color> Actor component successfully matched. Sending damage calculation...");
+                T.TakeDamage(attackDamage);
+            }
+            else
+            {
+                Debug.LogWarning($"<color=red>[Raycast Test]</color> Hit {hit.transform.name}, but it does not have the EnemyAI or Actor script attached!");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("<color=yellow>[Raycast Test]</color> Raycast missed. Ensure your enemy's Layer matches the Attack Layer mask!");
         }
     }
 
     void HitTarget(Vector3 pos)
     {
-        audioSource.pitch = 1;
-        audioSource.PlayOneShot(hitSound);
+        // Optional placeholder handling for hit effect generation
+    }
 
-        if (hitEffect !=null)
+
+    // ---------------------------- //
+    // FIRST-PERSON PLAYER FEEDBACK //
+    // ---------------------------- //
+
+    public void TakeDamage(int amount)
+    {
+        if (isDead) return;
+
+        playerCurrentHealth -= amount;
+        Debug.Log($"<color=red>[Combat Log]</color> Player took {amount} damage! Current Health: {playerCurrentHealth}");
+
+        if (cam != null && playerCurrentHealth > 0)
         {
-
-        GameObject GO = Instantiate(hitEffect, pos, Quaternion.identity);
-        Destroy(GO, 2f);
+            StopAllCoroutines();
+            StartCoroutine(CameraShakeRoutine());
         }
+
+        if (playerCurrentHealth <= 0)
+        {
+            DisableControllerOnDeath();
+            Debug.Log("<color=red>[PlayerController]</color> Player has fallen.");
+        }
+    }
+
+    private IEnumerator CameraShakeRoutine()
+    {
+        Vector3 originalPos = cam.transform.localPosition;
+        float elapsed = 0.0f;
+        float shakeDuration = 0.15f;
+        float shakeIntensity = 0.25f;
+
+        while (elapsed < shakeDuration)
+        {
+            float x = Random.Range(-1f, 1f) * shakeIntensity;
+            float y = Random.Range(-1f, 1f) * shakeIntensity;
+
+            cam.transform.localPosition = new Vector3(originalPos.x + x, originalPos.y + y, originalPos.z);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        cam.transform.localPosition = originalPos;
     }
 }
