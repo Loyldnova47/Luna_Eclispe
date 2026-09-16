@@ -249,13 +249,22 @@ public class PlayerController : MonoBehaviour
         readyToAttack = false;
         attacking = true;
 
-        audioSource.pitch = Random.Range(0.9f, 1.1f);
-        audioSource.PlayOneShot(swordSwing);
+        if (audioSource != null && swordSwing != null)
+        {
+            audioSource.pitch = Random.Range(0.9f, 1.1f);
+            audioSource.PlayOneShot(swordSwing);
+        }
 
         ChangeAnimationState(ATTACK1);
 
         StartCoroutine(AttackTimingRoutine());
         Invoke(nameof(ResetAttack), totalAttackDuration);
+    }
+
+    void ResetAttack()
+    {
+        attacking = false;
+        readyToAttack = true;
     }
 
     private IEnumerator AttackTimingRoutine()
@@ -271,13 +280,17 @@ public class PlayerController : MonoBehaviour
             Debug.Log($"<color=green>[Raycast Test]</color> Raycast physically HIT: {hit.transform.name}");
             HitTarget(hit.point);
 
-            // FIX: Try to grab EnemyAI directly first to force the glow execution path
-            if (hit.transform.TryGetComponent<EnemyAI>(out EnemyAI enemy))
+            // MATCHED NAME: Pulls EnemyAI_Musa dynamically to align visual frames
+            if (hit.transform.TryGetComponent<EnemyAI_Musa>(out EnemyAI_Musa enemy))
             {
-                Debug.Log("<color=orange>[Raycast Test]</color> Custom EnemyAI component matched! Forcing Neon Glow...");
+                Debug.Log("<color=orange>[Raycast Test]</color> Custom EnemyAI_Musa component matched! Forcing Neon Glow & Camera Shake...");
+
+                StopAllCoroutines();
+                StartCoroutine(CameraShakeRoutine());
+
+                // 2. LOGICAL SYSTEM: Process damage data through the target container
                 enemy.TakeDamage(attackDamage);
             }
-            // Fallback in case it's a generic actor target
             else if (hit.transform.TryGetComponent<Actor>(out Actor T))
             {
                 Debug.Log("<color=yellow>[Raycast Test]</color> Generic Actor component matched. Running standard damage loop.");
@@ -290,45 +303,14 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("<color=yellow>[Raycast Test]</color> Raycast missed. Ensure your enemy's Layer matches the Attack Layer mask!");
-        }
-    }
-    void ResetAttack()
-    {
-        attacking = false;
-        readyToAttack = true;
-    }
-
-    void AttackRaycast()
-    {
-        Debug.Log("<color=cyan>[Raycast Test]</color> AttackRaycast function fired!");
-
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, attackDistance, attackLayer))
-        {
-            Debug.Log($"<color=green>[Raycast Test]</color> Raycast physically HIT: {hit.transform.name}");
-            HitTarget(hit.point);
-
-            if (hit.transform.TryGetComponent<Actor>(out Actor T))
-            {
-                Debug.Log("<color=orange>[Raycast Test]</color> Actor component successfully matched. Sending damage calculation...");
-                T.TakeDamage(attackDamage);
-            }
-            else
-            {
-                Debug.LogWarning($"<color=red>[Raycast Test]</color> Hit {hit.transform.name}, but it does not have the EnemyAI or Actor script attached!");
-            }
-        }
-        else
-        {
-            Debug.LogWarning("<color=yellow>[Raycast Test]</color> Raycast missed. Ensure your enemy's Layer matches the Attack Layer mask!");
+            Debug.LogWarning("<color=yellow>[Raycast Test]</color> Raycast missed. Did not collide with any objects on the selected Layer Mask.");
         }
     }
 
     void HitTarget(Vector3 pos)
     {
-        // Optional placeholder handling for hit effect generation
+        // Hit effect instantiation logic placeholder
     }
-
 
     // ---------------------------- //
     // FIRST-PERSON PLAYER FEEDBACK //
@@ -343,14 +325,9 @@ public class PlayerController : MonoBehaviour
 
         if (cam != null && playerCurrentHealth > 0)
         {
-            StopAllCoroutines();
-            StartCoroutine(CameraShakeRoutine());
-        }
+            StopCoroutine(nameof(CameraShakeRoutine));
 
-        if (playerCurrentHealth <= 0)
-        {
-            DisableControllerOnDeath();
-            Debug.Log("<color=red>[PlayerController]</color> Player has fallen.");
+
         }
     }
 
@@ -359,7 +336,7 @@ public class PlayerController : MonoBehaviour
         Vector3 originalPos = cam.transform.localPosition;
         float elapsed = 0.0f;
         float shakeDuration = 0.15f;
-        float shakeIntensity = 0.25f;
+        float shakeIntensity = 0.45f;
 
         while (elapsed < shakeDuration)
         {
@@ -374,3 +351,4 @@ public class PlayerController : MonoBehaviour
         cam.transform.localPosition = originalPos;
     }
 }
+

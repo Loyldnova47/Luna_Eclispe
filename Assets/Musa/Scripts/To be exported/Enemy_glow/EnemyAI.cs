@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class EnemyAI : Actor
+public class EnemyAI_Musa : Actor
 {
     private Renderer meshRenderer;
     private Material originalMaterial;
@@ -17,7 +17,8 @@ public class EnemyAI : Actor
 
     private bool isDying = false;
 
-
+    [Header("Player Health Reward")]
+    public int healthRewardOnDeath = 10;
 
     protected override void Awake()
     {
@@ -92,13 +93,24 @@ public class EnemyAI : Actor
             meshRenderer.material = hitGlowMaterial;
         }
 
-        // 2. DELAY: Keep them in the world glowing red for your custom duration
-        yield return new WaitForSeconds(deathDuration);
+        GameObject playerObj = GameObject.FindWithTag("Player");
 
-        // 3. Revert rendering safely just before destruction
+        if (playerObj != null)
+        {
+            // 2. Automated Message: Tells the player object to execute its AddHealth function
+            // This bypasses type checking completely so Unity won't throw errors!
+            playerObj.SendMessage("AddHealth", (float)healthRewardOnDeath, SendMessageOptions.DontRequireReceiver);
+            Debug.Log($"<color=green>[Enemy AI]</color> Message sent: Reward {healthRewardOnDeath} HP to Player!");
+        }
+        else
+
+
+        yield return new WaitForSeconds(deathDuration); // 4. Wait a moment to let the player see the glow effect
+                                                        // 3. Revert rendering safely just before destruction
         if (meshRenderer != null) meshRenderer.material = originalMaterial;
 
-        // 4. Run the original base.Death() functionality to destroy the game object cleanly
+        // 5. Run the original base.Death() functionality to destroy the game object cleanly
+        
         base.Death();
     }
 
