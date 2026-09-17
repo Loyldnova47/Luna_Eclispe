@@ -12,7 +12,6 @@ public class EnemyAI_Musa : Actor
     public float flashDuration = 0.15f;
 
     [Header("Death Settings")]
-    
     public float deathDuration = 0.15f;
 
     private bool isDying = false;
@@ -40,11 +39,16 @@ public class EnemyAI_Musa : Actor
 
     public override void TakeDamage(int amount)
     {
-        // base.TakeDamage(amount); // Automatically drops health value internally
         if (isDying) return; // Prevent further damage if already dying
          
         currentHealth -= amount;
-        Debug.Log($"<color=orange>[Enemy AI]</color> Health remainig: {currentHealth}/{maxHealth}");
+        Debug.Log($"<color=orange>[Enemy AI]</color> Health remaining: {currentHealth}/{maxHealth}");
+
+        // Beautiful! This tells your floating health bar canvas to update instantly
+        if (healthBar != null)
+        {
+            healthBar.UpdateHealthBar((float)currentHealth, (float)maxHealth);
+        }
 
         if (currentHealth <= 0)
         {
@@ -72,7 +76,6 @@ public class EnemyAI_Musa : Actor
         meshRenderer.material = originalMaterial;
     }
 
-
     // Completely overrides the base class Death function to handle our delay timer
     protected override void Death()
     {
@@ -98,19 +101,22 @@ public class EnemyAI_Musa : Actor
         if (playerObj != null)
         {
             // 2. Automated Message: Tells the player object to execute its AddHealth function
-            // This bypasses type checking completely so Unity won't throw errors!
             playerObj.SendMessage("AddHealth", (float)healthRewardOnDeath, SendMessageOptions.DontRequireReceiver);
             Debug.Log($"<color=green>[Enemy AI]</color> Message sent: Reward {healthRewardOnDeath} HP to Player!");
         }
         else
+        {
+            // FIX: Safely closed this else block so it stops breaking your delay loop below!
+            Debug.LogWarning("<color=yellow>[Enemy AI]</color> Missing Player! Reward message skipped.");
+        }
 
-
-        yield return new WaitForSeconds(deathDuration); // 4. Wait a moment to let the player see the glow effect
-                                                        // 3. Revert rendering safely just before destruction
+        // 3. DELAY: Wait a moment to let the player see the glow effect
+        yield return new WaitForSeconds(deathDuration); 
+                                                        
+        // 4. Revert rendering safely just before destruction
         if (meshRenderer != null) meshRenderer.material = originalMaterial;
 
         // 5. Run the original base.Death() functionality to destroy the game object cleanly
-        
         base.Death();
     }
 

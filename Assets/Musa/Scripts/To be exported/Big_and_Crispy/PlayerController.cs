@@ -139,17 +139,17 @@ public class PlayerController : MonoBehaviour
     void OnDisable()
     { if (!isDead) input.Disable(); }
 
-    void Jump()
-    {
-        if (!isGrounded || attacking) return;
+    // void Jump()
+    // {
+    //     if (!isGrounded || attacking) return;
 
-        // Adds force to the player rigidbody to jump
-        _PlayerVelocity.y = Mathf.Sqrt(jumpHeight * -3.0f * gravity);
-    }
+    //     // Adds force to the player rigidbody to jump
+    //     _PlayerVelocity.y = Mathf.Sqrt(jumpHeight * -3.0f * gravity);
+    // }
 
     void AssignInputs()
     {
-        input.Jump.performed += ctx => Jump();
+        // input.Jump.performed += ctx => Jump();
         input.Attack.performed += ctx => Attack();
 
         // Listen for your new Escape button press action map event

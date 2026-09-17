@@ -111,15 +111,6 @@ public partial class @PlayerInput_new: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Jump"",
-                    ""type"": ""Button"",
-                    ""id"": ""d6934d2b-9a0b-4d00-a3b8-535236ab59bb"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""interact"",
                     ""type"": ""Button"",
                     ""id"": ""05bcdf9f-bdec-4279-9dd3-ad3c887b6505"",
@@ -270,28 +261,6 @@ public partial class @PlayerInput_new: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""2D Vector"",
-                    ""id"": ""a2d99e55-f1cf-4f2a-a7ae-5d5e9d6a9403"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard and mouse"",
-                    ""action"": ""Jump"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""33abca9c-c7ab-48c6-94cc-d0a6eae9998e"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Contoller"",
-                    ""action"": ""Jump"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
                     ""name"": """",
                     ""id"": ""b47dc9f7-225c-4036-bd74-c2467656e416"",
                     ""path"": ""<Keyboard>/e"",
@@ -421,7 +390,6 @@ public partial class @PlayerInput_new: IInputActionCollection2, IDisposable
         m_Main = asset.FindActionMap("Main", throwIfNotFound: true);
         m_Main_Movement = m_Main.FindAction("Movement", throwIfNotFound: true);
         m_Main_Look = m_Main.FindAction("Look", throwIfNotFound: true);
-        m_Main_Jump = m_Main.FindAction("Jump", throwIfNotFound: true);
         m_Main_interact = m_Main.FindAction("interact", throwIfNotFound: true);
         m_Main_Attack = m_Main.FindAction("Attack", throwIfNotFound: true);
         m_Main_Pause = m_Main.FindAction("Pause", throwIfNotFound: true);
@@ -507,7 +475,6 @@ public partial class @PlayerInput_new: IInputActionCollection2, IDisposable
     private List<IMainActions> m_MainActionsCallbackInterfaces = new List<IMainActions>();
     private readonly InputAction m_Main_Movement;
     private readonly InputAction m_Main_Look;
-    private readonly InputAction m_Main_Jump;
     private readonly InputAction m_Main_interact;
     private readonly InputAction m_Main_Attack;
     private readonly InputAction m_Main_Pause;
@@ -530,10 +497,6 @@ public partial class @PlayerInput_new: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Main/Look".
         /// </summary>
         public InputAction @Look => m_Wrapper.m_Main_Look;
-        /// <summary>
-        /// Provides access to the underlying input action "Main/Jump".
-        /// </summary>
-        public InputAction @Jump => m_Wrapper.m_Main_Jump;
         /// <summary>
         /// Provides access to the underlying input action "Main/interact".
         /// </summary>
@@ -578,9 +541,6 @@ public partial class @PlayerInput_new: IInputActionCollection2, IDisposable
             @Look.started += instance.OnLook;
             @Look.performed += instance.OnLook;
             @Look.canceled += instance.OnLook;
-            @Jump.started += instance.OnJump;
-            @Jump.performed += instance.OnJump;
-            @Jump.canceled += instance.OnJump;
             @interact.started += instance.OnInteract;
             @interact.performed += instance.OnInteract;
             @interact.canceled += instance.OnInteract;
@@ -607,9 +567,6 @@ public partial class @PlayerInput_new: IInputActionCollection2, IDisposable
             @Look.started -= instance.OnLook;
             @Look.performed -= instance.OnLook;
             @Look.canceled -= instance.OnLook;
-            @Jump.started -= instance.OnJump;
-            @Jump.performed -= instance.OnJump;
-            @Jump.canceled -= instance.OnJump;
             @interact.started -= instance.OnInteract;
             @interact.performed -= instance.OnInteract;
             @interact.canceled -= instance.OnInteract;
@@ -699,13 +656,6 @@ public partial class @PlayerInput_new: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnLook(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "Jump" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnJump(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "interact" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

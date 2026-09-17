@@ -25,15 +25,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Jump",
-                    "type": "Button",
-                    "id": "d6934d2b-9a0b-4d00-a3b8-535236ab59bb",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "interact",
                     "type": "Button",
                     "id": "05bcdf9f-bdec-4279-9dd3-ad3c887b6505",
@@ -180,28 +171,6 @@
                     "processors": "",
                     "groups": ";Contoller",
                     "action": "Movement",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "2D Vector",
-                    "id": "a2d99e55-f1cf-4f2a-a7ae-5d5e9d6a9403",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard and mouse",
-                    "action": "Jump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "33abca9c-c7ab-48c6-94cc-d0a6eae9998e",
-                    "path": "<Gamepad>/buttonSouth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Contoller",
-                    "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
