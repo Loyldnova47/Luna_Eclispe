@@ -108612,7 +108612,7 @@ MonoBehaviour:
   - {fileID: 1300998604}
   - {fileID: 845031160}
   waypointTolerance: 1
-  timeBetweenAttacks: 2
+  timeBetweenAttacks: 4
   attackDamage: 2
   sightRange: 6
   attackRange: 5
@@ -108645,7 +108645,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97e6c5efb3c1d164f82b1ef754148485, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
-  currentHealth: 0
+  currentHealth: 30
   maxHealth: 30
   healthBar: {fileID: 0}
   hitGlowMaterial: {fileID: 2100000, guid: 2390e404f4109fd409a21077c979be99, type: 2}
@@ -471779,7 +471779,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4083905276896568991, guid: fbb411ebd23784b419ee13d8c21a1378, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5247992340764801717, guid: fbb411ebd23784b419ee13d8c21a1378, type: 3}
       propertyPath: m_Name
@@ -471827,7 +471827,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8318101623215840656, guid: fbb411ebd23784b419ee13d8c21a1378, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9163028318284743279, guid: fbb411ebd23784b419ee13d8c21a1378, type: 3}
       propertyPath: m_AnchorMax.y
