@@ -23,7 +23,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("Camera")]
     public Camera cam;
-    public float sensitivity;
+    public float mouseSensitivity = 15f;
+    public float controllerSensitivity = 120.0f;
 
     [Header("Pause Settings UI")]
     [SerializeField] private GameObject pauseMenuUI;
@@ -70,7 +71,16 @@ public class PlayerController : MonoBehaviour
     { MoveInput(input.Movement.ReadValue<Vector2>()); }
 
     void LateUpdate()
-    { LookInput(input.Look.ReadValue<Vector2>()); }
+    { 
+      if (isDead) return;
+
+      Vector2 lookVector = input.Look.ReadValue<Vector2>();
+
+      var activeControl = input.Look.activeControl;
+      bool isController = activeControl != null && activeControl.device is Gamepad;
+
+      LookInput(lookVector, isController);
+    }
 
     public void DisableControllerOnDeath()
     {
@@ -109,17 +119,18 @@ public class PlayerController : MonoBehaviour
         controller.Move(_PlayerVelocity * Time.deltaTime);
     }
 
-    void LookInput(Vector3 input)
+    void LookInput(Vector3 input, bool isController)
     {
-        float mouseX = input.x;
-        float mouseY = input.y;
+        float currentSensitivity = isController ? controllerSensitivity : mouseSensitivity;
+        
+        float mouseX = input.x * Time.deltaTime * currentSensitivity;
+        float mouseY = input.y * Time.deltaTime * currentSensitivity;
 
-        xRotation -= (mouseY * Time.deltaTime * sensitivity);
+        xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -80, 80);
-
         cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
 
-        transform.Rotate(Vector3.up * (mouseX * Time.deltaTime * sensitivity));
+        transform.Rotate(Vector3.up * mouseX);
     }
 
     void OnEnable()
