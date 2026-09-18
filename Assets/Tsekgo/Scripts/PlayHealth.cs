@@ -11,6 +11,7 @@ public class PlayerHealth : MonoBehaviour
     [Header("UI References")]
     [SerializeField] private GameObject deathScreenUI;
     [SerializeField] private UnityEngine.UI.Slider healthSlider; // Slot for your layout UI slider
+    [SerializeField] private DamageVisuals damageVisualsScript;
 
     [Header("Settings")]
     [SerializeField] private float respawnDelay = 3f; // Delay before respawning after death
@@ -19,6 +20,8 @@ public class PlayerHealth : MonoBehaviour
 
     private PlayerController playerMovement;
     private bool isDead = false;
+
+
 
     void Awake()
     {
@@ -64,6 +67,12 @@ public class PlayerHealth : MonoBehaviour
             healthSlider.value = health;
 
         Debug.Log($"<color=green>[PlayerHealth] HEALED!</color> Gained +{amount} HP. Health: {oldHealth} -> {health}/{maxHealth}");
+
+        if (damageVisualsScript != null)
+        {
+            damageVisualsScript.TriggerHealFlash();
+        }
+
     }
 
     public void TakeDamage(float damage)
@@ -89,6 +98,11 @@ public class PlayerHealth : MonoBehaviour
         {
             health = 0;
             HandleDeath();
+        }
+
+        if (damageVisualsScript != null)
+        {
+            damageVisualsScript.TriggerDamageFlash();
         }
     }
 
