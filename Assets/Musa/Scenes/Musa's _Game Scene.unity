@@ -177744,6 +177744,11 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
+--- !u!1 &789126104 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4083905276896568991, guid: fbb411ebd23784b419ee13d8c21a1378, type: 3}
+  m_PrefabInstance: {fileID: 3722377884916262813}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &790524336
 GameObject:
   m_ObjectHideFlags: 0
@@ -412201,7 +412206,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
   maxHealth: 10
   health: 10
-  deathScreenUI: {fileID: 2382246520455119900}
+  deathScreenUI: {fileID: 789126104}
   healthSlider: {fileID: 2900152172991347815}
   respawnDelay: 2
 --- !u!114 &1889850210
@@ -471773,11 +471778,6 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
---- !u!1 &2382246520455119900 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4083905276896568991, guid: fbb411ebd23784b419ee13d8c21a1378, type: 3}
-  m_PrefabInstance: {fileID: 3722377884916262813}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2900152172991347815 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5552485921433202085, guid: fbb411ebd23784b419ee13d8c21a1378, type: 3}
