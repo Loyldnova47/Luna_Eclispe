@@ -244,6 +244,9 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Amount of damage the attack deals.")]
     public int attackDamage = 1;
     [Tooltip("Layers that the attack can hit.")]
+
+    public float hitImpactDelay = 0.2f;
+
     public LayerMask attackLayer;
 
     public GameObject hitEffect;
@@ -279,44 +282,57 @@ public class PlayerController : MonoBehaviour
     }
 
     private IEnumerator AttackTimingRoutine()
+{
+    // Wait for your hit timing delay window
+    yield return new WaitForSeconds(damageRegistryDelay);
+
+    Debug.Log("<color=cyan>[Raycast Test]</color> AttackRaycast function fired!");
+    Debug.DrawRay(cam.transform.position, cam.transform.forward * attackDistance, Color.green, 2.0f);
+
+    if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, attackDistance, attackLayer))
     {
-        // Wait for your hit timing delay window
-        yield return new WaitForSeconds(damageRegistryDelay);
+        Debug.Log($"<color=green>[Raycast Test]</color> Raycast physically HIT: {hit.transform.name}");
+        HitTarget(hit.point);
 
-        Debug.Log("<color=cyan>[Raycast Test]</color> AttackRaycast function fired!");
-        Debug.DrawRay(cam.transform.position, cam.transform.forward * attackDistance, Color.green, 2.0f);
-
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, attackDistance, attackLayer))
+        // PLAY HIT EFFECTS IMMEDIATELY ON SUCCESSFUL IMPACT
+        if (audioSource != null && hitSound != null)
         {
-            Debug.Log($"<color=green>[Raycast Test]</color> Raycast physically HIT: {hit.transform.name}");
-            HitTarget(hit.point);
+            audioSource.PlayOneShot(hitSound);
+        }
 
-            // MATCHED NAME: Pulls EnemyAI_Musa dynamically to align visual frames
-            if (hit.transform.TryGetComponent<EnemyAI_Musa>(out EnemyAI_Musa enemy))
-            {
-                Debug.Log("<color=orange>[Raycast Test]</color> Custom EnemyAI_Musa component matched! Forcing Neon Glow & Camera Shake...");
+        if (hitEffect != null)
+        {
+            Instantiate(hitEffect, hit.point, Quaternion.LookRotation(hit.normal));
+        }
 
-                StopAllCoroutines();
-                StartCoroutine(CameraShakeRoutine());
+        // MATCHED NAME: Pulls EnemyAI_Musa dynamically to align visual frames
+        if (hit.transform.TryGetComponent<EnemyAI_Musa>(out EnemyAI_Musa enemy))
+        {
+            Debug.Log("<color=orange>[Raycast Test]</color> Custom EnemyAI_Musa component matched! Forcing Neon Glow & Camera Shake...");
 
-                // 2. LOGICAL SYSTEM: Process damage data through the target container
-                enemy.TakeDamage(attackDamage);
-            }
-            else if (hit.transform.TryGetComponent<Actor>(out Actor T))
-            {
-                Debug.Log("<color=yellow>[Raycast Test]</color> Generic Actor component matched. Running standard damage loop.");
-                T.TakeDamage(attackDamage);
-            }
-            else
-            {
-                Debug.LogWarning($"<color=red>[Raycast Test]</color> Hit {hit.transform.name}, but it lacks an EnemyAI or Actor component!");
-            }
+            // WARNING: StopAllCoroutines() kills this entire script's active routines!
+            // If you must call it, do it AFTER playing sounds or use a dedicated camera script instead.
+            StopAllCoroutines(); 
+            StartCoroutine(CameraShakeRoutine());
+
+            // 2. LOGICAL SYSTEM: Process damage data through the target container
+            enemy.TakeDamage(attackDamage);
+        }
+        else if (hit.transform.TryGetComponent<Actor>(out Actor T))
+        {
+            Debug.Log("<color=yellow>[Raycast Test]</color> Generic Actor component matched. Running standard damage loop.");
+            T.TakeDamage(attackDamage);
         }
         else
         {
-            Debug.LogWarning("<color=yellow>[Raycast Test]</color> Raycast missed. Did not collide with any objects on the selected Layer Mask.");
+            Debug.LogWarning($"<color=red>[Raycast Test]</color> Hit {hit.transform.name}, but it lacks an EnemyAI or Actor component!");
         }
     }
+    else
+    {
+        Debug.LogWarning("<color=yellow>[Raycast Test]</color> Raycast missed. Did not collide with any objects on the selected Layer Mask.");
+    }
+} // Make sure your curly bracket closes the coroutine properly!
 
     void HitTarget(Vector3 pos)
     {

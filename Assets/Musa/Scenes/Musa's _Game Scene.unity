@@ -59477,6 +59477,14 @@ PrefabInstance:
       propertyPath: m_Center.y
       value: 0.66869056
       objectReference: {fileID: 0}
+    - target: {fileID: 1880482297885849090, guid: 7d2d4d35a62c8c44faefa8f0044f8817, type: 3}
+      propertyPath: m_Volume
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1880482297885849090, guid: 7d2d4d35a62c8c44faefa8f0044f8817, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 8300000, guid: a735497552642fd46af79441abc31679, type: 3}
     - target: {fileID: 3810372651483848101, guid: 7d2d4d35a62c8c44faefa8f0044f8817, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.44
@@ -59554,9 +59562,21 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8230024077880518613, guid: 7d2d4d35a62c8c44faefa8f0044f8817, type: 3}
+      propertyPath: hitSound
+      value: 
+      objectReference: {fileID: 8300000, guid: a786b60b6f9fa4c4db32bb5de715d9f0, type: 3}
+    - target: {fileID: 8230024077880518613, guid: 7d2d4d35a62c8c44faefa8f0044f8817, type: 3}
+      propertyPath: hitEffect
+      value: 
+      objectReference: {fileID: 3017415208759241679, guid: 966bed24398e68b4aa6f9b3236dcfeb0, type: 3}
+    - target: {fileID: 8230024077880518613, guid: 7d2d4d35a62c8c44faefa8f0044f8817, type: 3}
       propertyPath: moveSpeed
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 8230024077880518613, guid: 7d2d4d35a62c8c44faefa8f0044f8817, type: 3}
+      propertyPath: swordSwing
+      value: 
+      objectReference: {fileID: 8300000, guid: a735497552642fd46af79441abc31679, type: 3}
     - target: {fileID: 8230024077880518613, guid: 7d2d4d35a62c8c44faefa8f0044f8817, type: 3}
       propertyPath: pauseMenuUI
       value: 
