@@ -26,10 +26,12 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        Debug.Log("TakeDamage called, damage: " + damage + ", current health: " + health);
         health -= damage;
 
         if (health <= 0)
         {   //When health is zero, Luna respawns
+            Debug.Log("Health reached zero, calling Respawn()");
             health = 0;
             Respawn();
         }
