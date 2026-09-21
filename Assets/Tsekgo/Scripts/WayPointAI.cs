@@ -2,29 +2,24 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class WayPointAI : Actor
-
 {
     public NavMeshAgent agent;
     public Transform player;
     public LayerMask whatIsGround, whatIsPlayer;
 
-    //Death reward to Luna for killing Glorp(enemy)
     public int healthRewardOnDeath = 2;
 
-    //Patrolling between waypoints
     public Transform[] waypoints;
     private int currentWaypointIndex;
     public float waypointTolerance = 1f;
 
-    //Attacking logictics
     public float timeBetweenAttacks;
     bool alreadyAttacked;
-    public float attackDamage = 2f;
 
-    //States
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
 
+    private SlamAttack slamAttack; // NEW
 
     private void Awake()
     {
@@ -33,16 +28,14 @@ public class WayPointAI : Actor
             player = Luna.transform;
 
         agent = GetComponent<NavMeshAgent>();
+        slamAttack = GetComponent<SlamAttack>(); // NEW
     }
 
     private void Update()
     {
-        //Check for sight and attack range
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
-
-        //Different states according to conditions 
         if (!playerInSightRange && !playerInAttackRange) Patroling();
         if (playerInSightRange && !playerInAttackRange) ChasePlayer();
         if (playerInSightRange && playerInAttackRange) AttackPlayer();
@@ -57,7 +50,6 @@ public class WayPointAI : Actor
 
         float distanceToWaypoint = Vector3.Distance(transform.position, targetWaypoint.position);
 
-        //Waypoint reached, move to the next one
         if (distanceToWaypoint < waypointTolerance)
         {
             currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Length;
@@ -66,31 +58,31 @@ public class WayPointAI : Actor
 
     private void ChasePlayer()
     {
+        if (slamAttack !=null && slamAttack.IsAttacking)
+        {
+            agent.SetDestination(transform.position);
+            return;
+        }
+
+        agent.SetDestination (player.position);
         
-        agent.SetDestination(player.position);
     }
 
     public void AttackPlayer()
     {
-        //Keep enemy still when attacking Luna 
         agent.SetDestination(transform.position);
 
-        transform.LookAt(player);
+          if (!alreadyAttacked && (slamAttack == null || !slamAttack.IsAttacking))
+    {
+        transform.LookAt(player); 
 
-        if (!alreadyAttacked)
-        {
-            //Attacking when Luna is within range 
-            if (player != null)
-            {
-                PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
-                if (playerHealth != null)
-                    playerHealth.TakeDamage(attackDamage);
-            }
+        if (slamAttack != null)
+            slamAttack.PerformAttack();
 
-            alreadyAttacked = true;
-            Invoke(nameof(ResetAttack), timeBetweenAttacks);
-        }
+        alreadyAttacked = true;
+        Invoke(nameof(ResetAttack), timeBetweenAttacks);
     }
+}
 
     public void ResetAttack()
     {
@@ -101,7 +93,6 @@ public class WayPointAI : Actor
     {
         if (player != null)
         {
-            //When the enemy is destroyed, player gets awarded health 
             PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
             if (playerHealth != null)
                 playerHealth.AddHealth(healthRewardOnDeath);
@@ -117,7 +108,6 @@ public class WayPointAI : Actor
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, sightRange);
 
-        //Draw waypoint path
         if (waypoints != null && waypoints.Length > 0)
         {
             Gizmos.color = Color.cyan;
