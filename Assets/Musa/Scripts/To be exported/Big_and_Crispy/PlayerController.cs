@@ -18,7 +18,6 @@ public class PlayerController : MonoBehaviour
     public float jumpHeight = 1.2f;
 
     Vector3 _PlayerVelocity;
-
     bool isGrounded;
 
     [Header("Camera")]
@@ -31,14 +30,19 @@ public class PlayerController : MonoBehaviour
 
     float xRotation = 0f;
 
-    // Added a reference to lock actions when loaded
     private bool isDead = false;
     private bool isPaused = false;
 
-    // Player health values since player doesn't inherit from Actor
     [Header("Player Health System")]
     public int playerCurrentHealth = 100;
     public int playerMaxHealth = 100;
+
+    [Header("Footstep Settings")]
+    [Tooltip("Drag your walking/footstep audio clip here!")]
+    public AudioClip footstepSound;
+    [Tooltip("How many seconds between steps while walking.")]
+    public float footstepInterval = 0.5f;
+    private float footstepTimer = 0f;
 
     void Awake()
     {
@@ -53,14 +57,13 @@ public class PlayerController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        // Ensure the pause menu starts hidden
         if (pauseMenuUI != null)
             pauseMenuUI.SetActive(false);
     }
 
     void Update()
     {
-        if (isDead) return; // If the player is dead, skip the update
+        if (isDead) return;
 
         isGrounded = controller.isGrounded;
 
@@ -85,23 +88,22 @@ public class PlayerController : MonoBehaviour
     public void DisableControllerOnDeath()
     {
         isDead = true;
-        input.Disable(); // Completely shuts off input processing
-        _PlayerVelocity = Vector3.zero; // Wipes existing momentum
+        input.Disable();
+        _PlayerVelocity = Vector3.zero;
     }
 
     public void EnableControllerOnRespawn()
     {
         isDead = false;
-        input.Enable(); // Re-enables input processing
-        _PlayerVelocity = Vector3.zero; // Wipes existing momentum
-        xRotation = 0f; // Resets camera rotation
+        input.Enable();
+        _PlayerVelocity = Vector3.zero;
+        xRotation = 0f;
     }
 
     void MoveInput(Vector2 inputMovement)
     {
         Vector3 moveDirection = Vector3.zero;
 
-        // If you are swinging, ignore your keyboard movement
         if (!attacking)
         {
             moveDirection.x = inputMovement.x;
@@ -117,6 +119,32 @@ public class PlayerController : MonoBehaviour
             _PlayerVelocity.y = -2f;
 
         controller.Move(_PlayerVelocity * Time.deltaTime);
+
+        // Footstep playback system checks
+        if (isGrounded && inputMovement.sqrMagnitude > 0.01f && !isPaused && !isDead)
+        {
+            footstepTimer += Time.deltaTime;
+
+            if (footstepTimer >= footstepInterval)
+            {
+                PlayFootstep();
+                footstepTimer = 0f;
+            }
+        }
+        else
+        {
+            footstepTimer = footstepInterval;
+        }
+    }
+
+    private void PlayFootstep()
+    {
+        if (audioSource != null && footstepSound != null)
+        {
+            audioSource.pitch = Random.Range(0.85f, 1.15f);
+            audioSource.volume = Random.Range(0.6f, 0.8f);
+            audioSource.PlayOneShot(footstepSound);
+        }
     }
 
     void LookInput(Vector3 input, bool isController)
@@ -139,20 +167,9 @@ public class PlayerController : MonoBehaviour
     void OnDisable()
     { if (!isDead) input.Disable(); }
 
-    // void Jump()
-    // {
-    //     if (!isGrounded || attacking) return;
-
-    //     // Adds force to the player rigidbody to jump
-    //     _PlayerVelocity.y = Mathf.Sqrt(jumpHeight * -3.0f * gravity);
-    // }
-
     void AssignInputs()
     {
-        // input.Jump.performed += ctx => Jump();
         input.Attack.performed += ctx => Attack();
-
-        // Listen for your new Escape button press action map event
         input.Pause.performed += ctx => TogglePause();
     }
 
@@ -169,7 +186,6 @@ public class PlayerController : MonoBehaviour
             if (pauseMenuUI != null)
                 pauseMenuUI.SetActive(true);
 
-            //Unlock and reveal mouse cursor options
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
 
@@ -177,7 +193,6 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            // Resume the game simulation status path
             ResumeGame();
         }
     }
@@ -187,7 +202,6 @@ public class PlayerController : MonoBehaviour
         Time.timeScale = 1f;
         if (pauseMenuUI != null)
             pauseMenuUI.SetActive(false);
-        // Lock and hide mouse cursor options
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         Debug.Log("<color=yellow>[PlayerController]</color> Game Resumed.");
@@ -205,17 +219,14 @@ public class PlayerController : MonoBehaviour
 
     public void ChangeAnimationState(string newState)
     {
-        // STOP THE SAME ANIMATION FROM INTERRUPTING WITH ITSELF //
         if (currentAnimationState == newState) return;
 
-        // PLAY THE ANIMATION //
         currentAnimationState = newState;
         animator.CrossFadeInFixedTime(currentAnimationState, 0.0f, 0, 0f);
     }
 
     void SetAnimations()
     {
-        // If player is not attacking
         if (!attacking)
         {
             if (_PlayerVelocity.x == 0 && _PlayerVelocity.z == 0)
@@ -230,23 +241,13 @@ public class PlayerController : MonoBehaviour
     // ------------------- //
 
     [Header("Attacking Timing")]
-    [Tooltip("Delay between pressing the key and the weapon striking the target (in seconds). Set to 0 for instant hits.")]
     public float damageRegistryDelay = 0.2f;
-
-    [Tooltip("Total duration of the attack animation (in seconds). This should match the length of the attack animation.")]
     public float totalAttackDuration = 0.6f;
-    [Tooltip("Distance the attack can reach.")]
     public float attackDistance = 3f;
-    [Tooltip("Delay before the attack can be performed again (in seconds).")]
     public float attackDelay = 0.4f;
-    [Tooltip("Speed of the attack animation.")]
     public float attackSpeed = 1f;
-    [Tooltip("Amount of damage the attack deals.")]
-    public int attackDamage = 1;
-    [Tooltip("Layers that the attack can hit.")]
-
+    public int attackDamage = 10;
     public float hitImpactDelay = 0.2f;
-
     public LayerMask attackLayer;
 
     public GameObject hitEffect;
@@ -258,6 +259,7 @@ public class PlayerController : MonoBehaviour
 
     public void Attack()
     {
+        if (isPaused || Time.timeScale == 0f) return;
         if (!readyToAttack || attacking) return;
 
         readyToAttack = false;
@@ -266,6 +268,7 @@ public class PlayerController : MonoBehaviour
         if (audioSource != null && swordSwing != null)
         {
             audioSource.pitch = Random.Range(0.9f, 1.1f);
+            audioSource.volume = 1.0f;
             audioSource.PlayOneShot(swordSwing);
         }
 
@@ -282,62 +285,32 @@ public class PlayerController : MonoBehaviour
     }
 
     private IEnumerator AttackTimingRoutine()
-{
-    // Wait for your hit timing delay window
-    yield return new WaitForSeconds(damageRegistryDelay);
-
-    Debug.Log("<color=cyan>[Raycast Test]</color> AttackRaycast function fired!");
-    Debug.DrawRay(cam.transform.position, cam.transform.forward * attackDistance, Color.green, 2.0f);
-
-    if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, attackDistance, attackLayer))
     {
-        Debug.Log($"<color=green>[Raycast Test]</color> Raycast physically HIT: {hit.transform.name}");
-        HitTarget(hit.point);
+        yield return new WaitForSeconds(damageRegistryDelay);
 
-        // PLAY HIT EFFECTS IMMEDIATELY ON SUCCESSFUL IMPACT
-        if (audioSource != null && hitSound != null)
-        {
-            audioSource.PlayOneShot(hitSound);
-        }
+        Debug.Log("<color=cyan>[Raycast Test]</color> AttackRaycast function fired!");
+        Debug.DrawRay(cam.transform.position, cam.transform.forward * attackDistance, Color.green, 2.0f);
 
-        if (hitEffect != null)
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, attackDistance, attackLayer))
         {
-            Instantiate(hitEffect, hit.point, Quaternion.LookRotation(hit.normal));
-        }
+            Debug.Log($"<color=green>[Raycast Test]</color> Raycast physically HIT: {hit.transform.name}");
 
-        // MATCHED NAME: Pulls EnemyAI_Musa dynamically to align visual frames
-        if (hit.transform.TryGetComponent<EnemyAI_Musa>(out EnemyAI_Musa enemy))
-        {
-            Debug.Log("<color=orange>[Raycast Test]</color> Custom EnemyAI_Musa component matched! Forcing Neon Glow & Camera Shake...");
+            if (hitEffect != null)
+            {
+                GameObject sparks = Instantiate(hitEffect, hit.point, Quaternion.LookRotation(hit.normal));
+                Destroy(sparks, 1.0f);
+            }
 
-            // WARNING: StopAllCoroutines() kills this entire script's active routines!
-            // If you must call it, do it AFTER playing sounds or use a dedicated camera script instead.
-            StopAllCoroutines(); 
-            StartCoroutine(CameraShakeRoutine());
-
-            // 2. LOGICAL SYSTEM: Process damage data through the target container
-            enemy.TakeDamage(attackDamage);
-        }
-        else if (hit.transform.TryGetComponent<Actor>(out Actor T))
-        {
-            Debug.Log("<color=yellow>[Raycast Test]</color> Generic Actor component matched. Running standard damage loop.");
-            T.TakeDamage(attackDamage);
-        }
-        else
-        {
-            Debug.LogWarning($"<color=red>[Raycast Test]</color> Hit {hit.transform.name}, but it lacks an EnemyAI or Actor component!");
+            if (hit.transform.TryGetComponent<EnemyAI_Musa>(out EnemyAI_Musa enemy))
+            {
+                Debug.Log("<color=orange>[Raycast Test]</color> Custom EnemyAI_Musa component matched! Forcing Neon Glow & Camera Shake...");
+                StartCoroutine(CameraShakeRoutine());
+                enemy.TakeDamage(attackDamage);
+            }
         }
     }
-    else
-    {
-        Debug.LogWarning("<color=yellow>[Raycast Test]</color> Raycast missed. Did not collide with any objects on the selected Layer Mask.");
-    }
-} // Make sure your curly bracket closes the coroutine properly!
 
-    void HitTarget(Vector3 pos)
-    {
-        // Hit effect instantiation logic placeholder
-    }
+    void HitTarget(Vector3 pos) { }
 
     // ---------------------------- //
     // FIRST-PERSON PLAYER FEEDBACK //
@@ -347,14 +320,16 @@ public class PlayerController : MonoBehaviour
     {
         if (isDead) return;
 
-        playerCurrentHealth -= amount;
-        Debug.Log($"<color=red>[Combat Log]</color> Player took {amount} damage! Current Health: {playerCurrentHealth}");
+        StartCoroutine(CameraShakeRoutine());
 
-        if (cam != null && playerCurrentHealth > 0)
+        PlayerHealth healthScript = GetComponent<PlayerHealth>();
+        if (healthScript != null)
         {
-            StopCoroutine(nameof(CameraShakeRoutine));
-
-
+            healthScript.TakeDamage((float)amount);
+        }
+        else
+        {
+            FindFirstObjectByType<PlayerHealth>()?.TakeDamage((float)amount);
         }
     }
 
@@ -362,8 +337,8 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 originalPos = cam.transform.localPosition;
         float elapsed = 0.0f;
-        float shakeDuration = 0.15f;
-        float shakeIntensity = 0.45f;
+        float shakeDuration = 0.08f;  
+        float shakeIntensity = 0.08f; 
 
         while (elapsed < shakeDuration)
         {
