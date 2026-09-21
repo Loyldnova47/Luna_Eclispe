@@ -4,26 +4,14 @@ using UnityEngine;
 
 public class RespawnScript : MonoBehaviour
 {
-    public GameObject player;
+    public GameObject defaultSpawnPoint;
     public GameObject respawnPoint;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private void OnTriggerEnter (Collider other)
-    {
-        if(other.gameObject.CompareTag("Player"))
+        if (respawnPoint == null)
         {
-            player.transform.position = respawnPoint.transform.position;
+            respawnPoint = defaultSpawnPoint;
         }
     }
 }
