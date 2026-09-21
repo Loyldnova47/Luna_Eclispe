@@ -18,14 +18,31 @@ public class PlayerController : MonoBehaviour
     public float jumpHeight = 1.2f;
 
     Vector3 _PlayerVelocity;
-
     bool isGrounded;
 
     [Header("Camera")]
     public Camera cam;
-    public float sensitivity;
+    public float mouseSensitivity = 15f;
+    public float controllerSensitivity = 120.0f;
+
+    [Header("Pause Settings UI")]
+    [SerializeField] private GameObject pauseMenuUI;
 
     float xRotation = 0f;
+
+    private bool isDead = false;
+    private bool isPaused = false;
+
+    [Header("Player Health System")]
+    public int playerCurrentHealth = 100;
+    public int playerMaxHealth = 100;
+
+    [Header("Footstep Settings")]
+    [Tooltip("Drag your walking/footstep audio clip here!")]
+    public AudioClip footstepSound;
+    [Tooltip("How many seconds between steps while walking.")]
+    public float footstepInterval = 0.5f;
+    private float footstepTimer = 0f;
 
     void Awake()
     {
@@ -39,15 +56,16 @@ public class PlayerController : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        if (pauseMenuUI != null)
+            pauseMenuUI.SetActive(false);
     }
 
     void Update()
     {
-        isGrounded = controller.isGrounded;
+        if (isDead) return;
 
-        // Repeat Inputs
-        if (input.Attack.IsPressed())
-        { Attack(); }
+        isGrounded = controller.isGrounded;
 
         SetAnimations();
     }
@@ -56,51 +74,137 @@ public class PlayerController : MonoBehaviour
     { MoveInput(input.Movement.ReadValue<Vector2>()); }
 
     void LateUpdate()
-    { LookInput(input.Look.ReadValue<Vector2>()); }
+    { 
+      if (isDead) return;
 
-    void MoveInput(Vector2 input)
+      Vector2 lookVector = input.Look.ReadValue<Vector2>();
+
+      var activeControl = input.Look.activeControl;
+      bool isController = activeControl != null && activeControl.device is Gamepad;
+
+      LookInput(lookVector, isController);
+    }
+
+    public void DisableControllerOnDeath()
+    {
+        isDead = true;
+        input.Disable();
+        _PlayerVelocity = Vector3.zero;
+    }
+
+    public void EnableControllerOnRespawn()
+    {
+        isDead = false;
+        input.Enable();
+        _PlayerVelocity = Vector3.zero;
+        xRotation = 0f;
+    }
+
+    void MoveInput(Vector2 inputMovement)
     {
         Vector3 moveDirection = Vector3.zero;
-        moveDirection.x = input.x;
-        moveDirection.z = input.y;
 
-        controller.Move(transform.TransformDirection(moveDirection) * moveSpeed * Time.deltaTime);
+        if (!attacking)
+        {
+            moveDirection.x = inputMovement.x;
+            moveDirection.z = inputMovement.y;
+            moveDirection = transform.TransformDirection(moveDirection) * moveSpeed;
+        }
+
+        controller.Move(moveDirection * Time.deltaTime);
+
+        // Handle Gravity
         _PlayerVelocity.y += gravity * Time.deltaTime;
         if (isGrounded && _PlayerVelocity.y < 0)
             _PlayerVelocity.y = -2f;
+
         controller.Move(_PlayerVelocity * Time.deltaTime);
+
+        // Footstep playback system checks
+        if (isGrounded && inputMovement.sqrMagnitude > 0.01f && !isPaused && !isDead)
+        {
+            footstepTimer += Time.deltaTime;
+
+            if (footstepTimer >= footstepInterval)
+            {
+                PlayFootstep();
+                footstepTimer = 0f;
+            }
+        }
+        else
+        {
+            footstepTimer = footstepInterval;
+        }
     }
 
-    void LookInput(Vector3 input)
+    private void PlayFootstep()
     {
-        float mouseX = input.x;
-        float mouseY = input.y;
+        if (audioSource != null && footstepSound != null)
+        {
+            audioSource.pitch = Random.Range(0.85f, 1.15f);
+            audioSource.volume = Random.Range(0.6f, 0.8f);
+            audioSource.PlayOneShot(footstepSound);
+        }
+    }
 
-        xRotation -= (mouseY * Time.deltaTime * sensitivity);
+    void LookInput(Vector3 input, bool isController)
+    {
+        float currentSensitivity = isController ? controllerSensitivity : mouseSensitivity;
+        
+        float mouseX = input.x * Time.deltaTime * currentSensitivity;
+        float mouseY = input.y * Time.deltaTime * currentSensitivity;
+
+        xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -80, 80);
-
         cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
 
-        transform.Rotate(Vector3.up * (mouseX * Time.deltaTime * sensitivity));
+        transform.Rotate(Vector3.up * mouseX);
     }
 
     void OnEnable()
-    { input.Enable(); }
+    { if (!isDead) input.Enable(); }
 
     void OnDisable()
-    { input.Disable(); }
-
-    void Jump()
-    {
-        // Adds force to the player rigidbody to jump
-        if (isGrounded)
-            _PlayerVelocity.y = Mathf.Sqrt(jumpHeight * -3.0f * gravity);
-    }
+    { if (!isDead) input.Disable(); }
 
     void AssignInputs()
     {
-        input.Jump.performed += ctx => Jump();
-        input.Attack.started += ctx => Attack();
+        input.Attack.performed += ctx => Attack();
+        input.Pause.performed += ctx => TogglePause();
+    }
+
+    public void TogglePause()
+    {
+        if (isDead) return;
+
+        isPaused = !isPaused;
+
+        if (isPaused)
+        {
+            Time.timeScale = 0f;
+
+            if (pauseMenuUI != null)
+                pauseMenuUI.SetActive(true);
+
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
+            Debug.Log("<color=yellow>[PlayerController]</color> Game Paused.");
+        }
+        else
+        {
+            ResumeGame();
+        }
+    }
+
+    public void ResumeGame()
+    {
+        Time.timeScale = 1f;
+        if (pauseMenuUI != null)
+            pauseMenuUI.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        Debug.Log("<color=yellow>[PlayerController]</color> Game Resumed.");
     }
 
     // ---------- //
@@ -110,23 +214,19 @@ public class PlayerController : MonoBehaviour
     public const string IDLE = "Idle";
     public const string WALK = "Walk";
     public const string ATTACK1 = "Attack 1";
-    public const string ATTACK2 = "Attack 2";
 
     string currentAnimationState;
 
     public void ChangeAnimationState(string newState)
     {
-        // STOP THE SAME ANIMATION FROM INTERRUPTING WITH ITSELF //
         if (currentAnimationState == newState) return;
 
-        // PLAY THE ANIMATION //
         currentAnimationState = newState;
-        animator.CrossFadeInFixedTime(currentAnimationState, 0.2f);
+        animator.CrossFadeInFixedTime(currentAnimationState, 0.0f, 0, 0f);
     }
 
     void SetAnimations()
     {
-        // If player is not attacking
         if (!attacking)
         {
             if (_PlayerVelocity.x == 0 && _PlayerVelocity.z == 0)
@@ -140,11 +240,14 @@ public class PlayerController : MonoBehaviour
     // ATTACKING BEHAVIOUR //
     // ------------------- //
 
-    [Header("Attacking")]
+    [Header("Attacking Timing")]
+    public float damageRegistryDelay = 0.2f;
+    public float totalAttackDuration = 0.6f;
     public float attackDistance = 3f;
     public float attackDelay = 0.4f;
     public float attackSpeed = 1f;
-    public int attackDamage = 1;
+    public int attackDamage = 10;
+    public float hitImpactDelay = 0.2f;
     public LayerMask attackLayer;
 
     public GameObject hitEffect;
@@ -153,31 +256,26 @@ public class PlayerController : MonoBehaviour
 
     bool attacking = false;
     bool readyToAttack = true;
-    int attackCount;
 
     public void Attack()
     {
+        if (isPaused || Time.timeScale == 0f) return;
         if (!readyToAttack || attacking) return;
 
         readyToAttack = false;
         attacking = true;
 
-        Invoke(nameof(ResetAttack), attackSpeed);
-        Invoke(nameof(AttackRaycast), attackDelay);
-
-        audioSource.pitch = Random.Range(0.9f, 1.1f);
-        audioSource.PlayOneShot(swordSwing);
-
-        if (attackCount == 0)
+        if (audioSource != null && swordSwing != null)
         {
-            ChangeAnimationState(ATTACK1);
-            attackCount++;
+            audioSource.pitch = Random.Range(0.9f, 1.1f);
+            audioSource.volume = 1.0f;
+            audioSource.PlayOneShot(swordSwing);
         }
-        else
-        {
-            ChangeAnimationState(ATTACK2);
-            attackCount = 0;
-        }
+
+        ChangeAnimationState(ATTACK1);
+
+        StartCoroutine(AttackTimingRoutine());
+        Invoke(nameof(ResetAttack), totalAttackDuration);
     }
 
     void ResetAttack()
@@ -186,27 +284,73 @@ public class PlayerController : MonoBehaviour
         readyToAttack = true;
     }
 
-    void AttackRaycast()
+    private IEnumerator AttackTimingRoutine()
     {
+        yield return new WaitForSeconds(damageRegistryDelay);
+
+        Debug.Log("<color=cyan>[Raycast Test]</color> AttackRaycast function fired!");
+        Debug.DrawRay(cam.transform.position, cam.transform.forward * attackDistance, Color.green, 2.0f);
+
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, attackDistance, attackLayer))
         {
-            HitTarget(hit.point);
+            Debug.Log($"<color=green>[Raycast Test]</color> Raycast physically HIT: {hit.transform.name}");
 
-            if (hit.transform.TryGetComponent<Actor>(out Actor T))
-            { T.TakeDamage(attackDamage); }
+            if (hitEffect != null)
+            {
+                GameObject sparks = Instantiate(hitEffect, hit.point, Quaternion.LookRotation(hit.normal));
+                Destroy(sparks, 1.0f);
+            }
+
+            if (hit.transform.TryGetComponent<EnemyAI_Musa>(out EnemyAI_Musa enemy))
+            {
+                Debug.Log("<color=orange>[Raycast Test]</color> Custom EnemyAI_Musa component matched! Forcing Neon Glow & Camera Shake...");
+                StartCoroutine(CameraShakeRoutine());
+                enemy.TakeDamage(attackDamage);
+            }
         }
     }
 
-    void HitTarget(Vector3 pos)
+    void HitTarget(Vector3 pos) { }
+
+    // ---------------------------- //
+    // FIRST-PERSON PLAYER FEEDBACK //
+    // ---------------------------- //
+
+    public void TakeDamage(int amount)
     {
-        audioSource.pitch = 1;
-        audioSource.PlayOneShot(hitSound);
+        if (isDead) return;
 
-        if (hitEffect !=null)
+        StartCoroutine(CameraShakeRoutine());
+
+        PlayerHealth healthScript = GetComponent<PlayerHealth>();
+        if (healthScript != null)
         {
-
-        GameObject GO = Instantiate(hitEffect, pos, Quaternion.identity);
-        Destroy(GO, 20);
+            healthScript.TakeDamage((float)amount);
         }
+        else
+        {
+            FindFirstObjectByType<PlayerHealth>()?.TakeDamage((float)amount);
+        }
+    }
+
+    private IEnumerator CameraShakeRoutine()
+    {
+        Vector3 originalPos = cam.transform.localPosition;
+        float elapsed = 0.0f;
+        float shakeDuration = 0.08f;  
+        float shakeIntensity = 0.08f; 
+
+        while (elapsed < shakeDuration)
+        {
+            float x = Random.Range(-1f, 1f) * shakeIntensity;
+            float y = Random.Range(-1f, 1f) * shakeIntensity;
+
+            cam.transform.localPosition = new Vector3(originalPos.x + x, originalPos.y + y, originalPos.z);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        cam.transform.localPosition = originalPos;
     }
 }
+
