@@ -19,7 +19,13 @@ public class WayPointAI : Actor
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
 
-    private SlamAttack slamAttack; // NEW
+    private SlamAttack slamAttack; 
+    private float lockedZPosition;
+
+    private void Start ()
+    {
+        lockedZPosition = transform.position.z;
+    }
 
     private void Awake()
     {
@@ -54,6 +60,10 @@ public class WayPointAI : Actor
         {
             currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Length;
         }
+
+        Vector3 currentPosition = transform.position;
+        currentPosition.z = lockedZPosition;
+        transform.position = currentPosition;
     }
 
     private void ChasePlayer()
