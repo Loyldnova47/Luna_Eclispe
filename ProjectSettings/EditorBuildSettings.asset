@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Abby/Menu/Menu.unity
+    guid: 2a61a57095b35274ba4115f4cf36edbc
+  - enabled: 1
     path: Assets/Abby/Scenes/Intro Scene.unity
     guid: ae60bb7443957a9498ed1f5fc254e572
   - enabled: 1
