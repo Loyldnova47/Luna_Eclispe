@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     PlayerInput_new playerInput;
-    PlayerInput_new.MainActions input;
+    public PlayerInput_new.MainActions input;
 
     CharacterController controller;
     Animator animator;
@@ -44,21 +44,27 @@ public class PlayerController : MonoBehaviour
     public float footstepInterval = 0.5f;
     private float footstepTimer = 0f;
 
+    private Coroutine shakeRoutine;
+    private Vector3 camRestPos; // true "home" position, captured once
+
     void Awake()
     {
-        controller = GetComponent<CharacterController>();
-        animator = GetComponentInChildren<Animator>();
-        audioSource = GetComponent<AudioSource>();
+       controller = GetComponent<CharacterController>();
+    animator = GetComponentInChildren<Animator>();
+    audioSource = GetComponent<AudioSource>();
 
-        playerInput = new PlayerInput_new();
-        input = playerInput.Main;
-        AssignInputs();
+    playerInput = new PlayerInput_new();
+    input = playerInput.Main;
+    AssignInputs();
 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+    Cursor.lockState = CursorLockMode.Locked;
+    Cursor.visible = false;
 
-        if (pauseMenuUI != null)
-            pauseMenuUI.SetActive(false);
+    if (pauseMenuUI != null)
+        pauseMenuUI.SetActive(false);
+
+    if (cam != null)
+        camRestPos = cam.transform.localPosition; // capture once, before any shake ever runs 
     }
 
     void Update()
@@ -87,9 +93,18 @@ public class PlayerController : MonoBehaviour
 
     public void DisableControllerOnDeath()
     {
-        isDead = true;
-        input.Disable();
-        _PlayerVelocity = Vector3.zero;
+      isDead = true;
+      input.Disable();
+      _PlayerVelocity = Vector3.zero;
+
+      if (shakeRoutine != null)
+      {
+        StopCoroutine(shakeRoutine);
+        shakeRoutine = null;
+      }
+
+       if (cam != null)
+        cam.transform.localPosition = camRestPos; // hard reset, no waiting on the routine to notice
     }
 
     public void EnableControllerOnRespawn()
@@ -304,7 +319,7 @@ public class PlayerController : MonoBehaviour
             if (hit.transform.TryGetComponent<EnemyAI_Musa>(out EnemyAI_Musa enemy))
             {
                 Debug.Log("<color=orange>[Raycast Test]</color> Custom EnemyAI_Musa component matched! Forcing Neon Glow & Camera Shake...");
-                StartCoroutine(CameraShakeRoutine());
+                //TriggerShake();
                 enemy.TakeDamage(attackDamage);
             }
         }
@@ -320,7 +335,7 @@ public class PlayerController : MonoBehaviour
     {
         if (isDead) return;
 
-        StartCoroutine(CameraShakeRoutine());
+        TriggerShake();
 
         PlayerHealth healthScript = GetComponent<PlayerHealth>();
         if (healthScript != null)
@@ -333,24 +348,38 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void TriggerShake()
+    {
+    if (shakeRoutine != null)
+        StopCoroutine(shakeRoutine);
+
+    cam.transform.localPosition = camRestPos;
+    shakeRoutine = StartCoroutine(CameraShakeRoutine());
+   }
+
     private IEnumerator CameraShakeRoutine()
     {
-        Vector3 originalPos = cam.transform.localPosition;
         float elapsed = 0.0f;
-        float shakeDuration = 0.08f;  
-        float shakeIntensity = 0.08f; 
+    float shakeDuration = 0.08f;
+    float shakeIntensity = 0.08f;
 
-        while (elapsed < shakeDuration)
-        {
-            float x = Random.Range(-1f, 1f) * shakeIntensity;
-            float y = Random.Range(-1f, 1f) * shakeIntensity;
+    while (elapsed < shakeDuration)
+    {
+        if (isDead) break;
 
-            cam.transform.localPosition = new Vector3(originalPos.x + x, originalPos.y + y, originalPos.z);
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
+        float x = Random.Range(-1f, 1f) * shakeIntensity;
+        float y = Random.Range(-1f, 1f) * shakeIntensity;
 
-        cam.transform.localPosition = originalPos;
+        cam.transform.localPosition = new Vector3(camRestPos.x + x, camRestPos.y + y, camRestPos.z);
+
+        elapsed += Time.unscaledDeltaTime;
+        yield return null;
     }
+
+    cam.transform.localPosition = camRestPos;
+    shakeRoutine = null; 
+    }
+
+    
 }
 

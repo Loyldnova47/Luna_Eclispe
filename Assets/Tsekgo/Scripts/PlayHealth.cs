@@ -94,7 +94,7 @@ public class PlayerHealth : MonoBehaviour
         Debug.Log($"<color=green>[PlayerHealth]</color> Healed! Current health: {health}/{maxHealth}");
     }
 
-    public void TakeDamage(float damage)
+        public void TakeDamage(float damage)
     {
         if (isDead) return; 
 
@@ -109,9 +109,12 @@ public class PlayerHealth : MonoBehaviour
         }
 
         // ================================================================
-        // HURT SOUND PLAYBACK
+        // CLEAN HIT FEEDBACK (No Infinite Loops!)
         // ================================================================
-        // Plays the sound instantly with a micro pitch-bend so repetitive hits don't sound flat
+        // Directly calls the camera shake function inside PlayerController 
+        // using SendMessage so it NEVER bounces back here!
+        SendMessage("CameraShakeRoutine", SendMessageOptions.DontRequireReceiver);
+
         if (localAudioSource != null && hurtSoundEffect != null && health > 0)
         {
             localAudioSource.pitch = Random.Range(0.92f, 1.08f);
@@ -119,7 +122,7 @@ public class PlayerHealth : MonoBehaviour
         }
         // ================================================================
 
-        Debug.Log($"<color=orange>[PlayerHealth]</color> Damage taken! Current health: {health}/{maxHealth}");
+        Debug.Log($"<color=orange>[PlayerHealth]</color> Damage taken cleanly! Current health: {health}/{maxHealth}");
 
         if (health <= 0)
         {   
@@ -127,6 +130,7 @@ public class PlayerHealth : MonoBehaviour
             HandleDeathSequence();
         }
     }
+
 
     void HandleDeathSequence()
     {
@@ -137,7 +141,7 @@ public class PlayerHealth : MonoBehaviour
             deathScreenUI.SetActive(true);
 
         if (playerMovement != null)
-            playerMovement.DisableControllerOnDeath();
+            playerMovement.TriggerShake();
 
         Time.timeScale = 0f; 
 
