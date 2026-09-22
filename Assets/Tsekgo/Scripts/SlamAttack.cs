@@ -3,24 +3,28 @@ using UnityEngine;
 
 public class SlamAttack : MonoBehaviour
 {
+    //recognises the arms on either side of the enemy
     public GameObject rectangleLeft;
     public GameObject rectangleRight;
 
+    //responsible for timing the frequency of attacks 
     [Header("Timing")]
     public float telegraphDuration = 0.8f;
     public float activeDuration = 0.2f;
 
+    //responsible for the overall slamming movement of the arms 
     [Header("Visual Rotation")]
     public float raisedAngle = -140f;
     public float slammedAngle = 0f;
     public Vector3 rotationAxis = Vector3.right;
 
     [Header("Area Attack Settings")]
-    public float attackRadius = 5f;          // How wide the aerial damage zone is
-    public int damageAmount = 1;             // Damage dealt to the player
-    public LayerMask playerLayer;            // Set this to your Player layer
-    public Transform damageCenter;           // Where the attack originates (defaults to enemy position)
-
+    // attack zone
+    public float attackRadius = 5f;         
+    //damage dealt to player (luna)
+    public int damageAmount = 1;            
+    public LayerMask playerLayer;          
+    public Transform damageCenter;         
     private bool isAttacking = false;
     public bool IsAttacking => isAttacking;
 
@@ -38,7 +42,7 @@ public class SlamAttack : MonoBehaviour
         rectangleLeft.transform.localRotation = leftRaisedRot;
         rectangleRight.transform.localRotation = rightRaisedRot;
         
-        // If no custom damage center is set, use the enemy's feet/position
+        // damage center set to the enemy's position by default
         if (damageCenter == null) damageCenter = transform;
     }
 
@@ -55,7 +59,7 @@ public class SlamAttack : MonoBehaviour
         Quaternion leftSlamRot = leftRestRot * Quaternion.AngleAxis(slammedAngle, rotationAxis);
         Quaternion rightSlamRot = rightRestRot * Quaternion.AngleAxis(slammedAngle, rotationAxis);
 
-        // 1. Swing DOWN (Telegraph phase)
+        // downward swing of arms 
         float elapsed = 0f;
         while (elapsed < telegraphDuration)
         {
@@ -71,13 +75,13 @@ public class SlamAttack : MonoBehaviour
         rectangleLeft.transform.localRotation = leftSlamRot;
         rectangleRight.transform.localRotation = rightSlamRot;
 
-        // 2. IMPACT MOMENT: Deal Area Damage instantly
+       //dealing damage within a area (not directly from the arms)
         DealAreaDamage();
 
-        // Hold the slammed position briefly
+        // keep arms temporarily in slam position
         yield return new WaitForSeconds(activeDuration);
 
-        // 3. Swing back UP to raised/idle position
+        //the swing moves back up to default position
         elapsed = 0f;
         float returnDuration = telegraphDuration * 0.5f;
         while (elapsed < returnDuration)
@@ -99,7 +103,7 @@ public class SlamAttack : MonoBehaviour
 
     private void DealAreaDamage()
     {
-        // Finds all colliders on the 'playerLayer' within the 'attackRadius'
+        // recognises all colliders on the player area that are within the attack area
         Collider[] hitColliders = Physics.OverlapSphere(damageCenter.position, attackRadius, playerLayer);
 
         foreach (Collider hit in hitColliders)
@@ -118,7 +122,7 @@ public class SlamAttack : MonoBehaviour
         }
     }
 
-    // Visualises the attack radius in the Unity editor scene view
+    // visualises the attack radius 
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.magenta;
