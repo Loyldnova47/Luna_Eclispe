@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Musa/Scenes/Menu.unity
+    path: Assets/Abby/Menu/Menu.unity
     guid: 2a61a57095b35274ba4115f4cf36edbc
   - enabled: 1
     path: Assets/Abby/Scenes/Intro Scene.unity

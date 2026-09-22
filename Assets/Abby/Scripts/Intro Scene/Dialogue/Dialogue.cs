@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class Dialogue : MonoBehaviour
 {
@@ -10,7 +11,8 @@ public class Dialogue : MonoBehaviour
     public string[] lines;
     public float textSpeed;
 
-    private int index;// tracking dialogue 
+    private int index;
+
     void Start()
     {
         textComponent.text = string.Empty;
@@ -18,7 +20,8 @@ public class Dialogue : MonoBehaviour
     }
     void Update()
     {
-        if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
+
+        if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame) // left button activation for dialogue.
         {
             if (textComponent.text == lines[index])
             {
@@ -57,7 +60,8 @@ public class Dialogue : MonoBehaviour
         }
         else
         {
-            gameObject.SetActive(false);//dialogue is complete, hence box is de-acitivating. 
+            SceneManager.LoadScene("(Tsekgo) Cypress Storage"); // Loading scene. PLEASE WQRK! 
+
         }
     }
 }
