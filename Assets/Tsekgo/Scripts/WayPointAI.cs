@@ -47,7 +47,9 @@ public class WayPointAI : Actor
         // Automatically find Luna by her name in the scene
         GameObject Luna = GameObject.Find("Luna");
         if (Luna != null)
+        {
             player = Luna.transform;
+        }
 
         agent = GetComponent<NavMeshAgent>();
         slamAttack = GetComponent<SlamAttack>(); // Cache the new SlamAttack component
@@ -130,19 +132,17 @@ public class WayPointAI : Actor
                 slamAttack.PerformAttack();
             }
 
-            // ================================================================
-            // 2. LOGICAL DAMAGE CALCULATIONS RE-INTEGRATION
-            // ================================================================
             PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
             if (playerHealth != null)
             {
-                playerHealth.TakeDamage(attackDamage);
+                //playerHealth.TakeDamage(attackDamage);
 
-                // JUICE LINK: Force Luna's screen view matrix to shudder dynamically on hit
                 PlayerController controller = player.GetComponent<PlayerController>();
-                if (controller != null) controller.TakeDamage(0); 
+                if (controller != null)
+                {
+                   // controller.TakeDamage(0); 
+                }
             }
-            // ================================================================
 
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
@@ -250,7 +250,9 @@ public class WayPointAI : Actor
 
                 Transform nextWaypoint = waypoints[(i + 1) % waypoints.Length];
                 if (nextWaypoint != null)
+                {
                     Gizmos.DrawLine(waypoints[i].position, nextWaypoint.position);
+                }
             }
         }
     }
