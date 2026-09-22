@@ -7827,6 +7827,37 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
+--- !u!1 &43603310
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 43603311}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &43603311
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43603310}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -76.83459, y: 1.01791, z: -19.08557}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &44367752
 GameObject:
   m_ObjectHideFlags: 0
@@ -27776,11 +27807,11 @@ Transform:
   m_GameObject: {fileID: 165295355}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.701558, z: -0, w: 0.7126124}
-  m_LocalPosition: {x: -21.29, y: 0.38, z: 0.34}
+  m_LocalPosition: {x: 18.548239, y: -2.5388098, z: 4.50585}
   m_LocalScale: {x: 4, y: 7, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2020728209}
   m_LocalEulerAnglesHint: {x: 0, y: -89.104, z: 0}
 --- !u!43 &171175086
 Mesh:
@@ -37796,7 +37827,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &225775589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37826,7 +37857,6 @@ MonoBehaviour:
   - {fileID: 0}
   waypointTolerance: 1
   timeBetweenAttacks: 2
-  attackDamage: 2
   sightRange: 6
   attackRange: 4
   playerInSightRange: 0
@@ -56185,11 +56215,11 @@ Transform:
   m_GameObject: {fileID: 316780165}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.701558, z: -0, w: 0.7126124}
-  m_LocalPosition: {x: -76.2, y: 0.38, z: -19.2}
+  m_LocalPosition: {x: -38.23176, y: -2.5388098, z: -15.444151}
   m_LocalScale: {x: 4, y: 7, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2020728209}
   m_LocalEulerAnglesHint: {x: 0, y: -89.104, z: 0}
 --- !u!43 &318030862
 Mesh:
@@ -69111,7 +69141,6 @@ MonoBehaviour:
   - {fileID: 1972133127}
   waypointTolerance: 1
   timeBetweenAttacks: 2
-  attackDamage: 2
   sightRange: 6
   attackRange: 4
   playerInSightRange: 0
@@ -93392,7 +93421,6 @@ MonoBehaviour:
   - {fileID: 1588882037}
   waypointTolerance: 1
   timeBetweenAttacks: 1
-  attackDamage: 2
   sightRange: 6
   attackRange: 4
   playerInSightRange: 0
@@ -105391,7 +105419,6 @@ MonoBehaviour:
   - {fileID: 845031160}
   waypointTolerance: 1
   timeBetweenAttacks: 2
-  attackDamage: 2
   sightRange: 6
   attackRange: 5
   playerInSightRange: 0
@@ -125518,7 +125545,6 @@ MonoBehaviour:
   - {fileID: 1796023653}
   waypointTolerance: 1
   timeBetweenAttacks: 3
-  attackDamage: 2
   sightRange: 6
   attackRange: 4
   playerInSightRange: 0
@@ -156060,7 +156086,6 @@ MonoBehaviour:
   waypoints: []
   waypointTolerance: 1
   timeBetweenAttacks: 1
-  attackDamage: 2
   sightRange: 6
   attackRange: 4
   playerInSightRange: 0
@@ -178448,7 +178473,6 @@ MonoBehaviour:
   - {fileID: 1613691552}
   waypointTolerance: 1
   timeBetweenAttacks: 2
-  attackDamage: 2
   sightRange: 6
   attackRange: 4
   playerInSightRange: 0
@@ -284850,11 +284874,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6474219582760105602, guid: c7efdf5599f0b3043b67addc07726e79, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6474219582760105602, guid: c7efdf5599f0b3043b67addc07726e79, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8845301622328026491, guid: c7efdf5599f0b3043b67addc07726e79, type: 3}
       propertyPath: m_Name
@@ -285974,7 +285998,6 @@ MonoBehaviour:
   - {fileID: 97877179}
   waypointTolerance: 1
   timeBetweenAttacks: 0
-  attackDamage: 2
   sightRange: 6
   attackRange: 4
   playerInSightRange: 0
@@ -289103,7 +289126,6 @@ MonoBehaviour:
   - {fileID: 124642907}
   waypointTolerance: 1
   timeBetweenAttacks: 1
-  attackDamage: 2
   sightRange: 6
   attackRange: 4
   playerInSightRange: 0
@@ -296512,7 +296534,6 @@ MonoBehaviour:
   waypoints: []
   waypointTolerance: 1
   timeBetweenAttacks: 2
-  attackDamage: 2
   sightRange: 6
   attackRange: 4
   playerInSightRange: 0
@@ -329069,7 +329090,6 @@ MonoBehaviour:
   - {fileID: 93146100}
   waypointTolerance: 1
   timeBetweenAttacks: 1
-  attackDamage: 2
   sightRange: 6
   attackRange: 4
   playerInSightRange: 0
@@ -358053,7 +358073,6 @@ MonoBehaviour:
   - {fileID: 563670308}
   waypointTolerance: 1
   timeBetweenAttacks: 1
-  attackDamage: 2
   sightRange: 6
   attackRange: 4
   playerInSightRange: 0
@@ -374696,7 +374715,6 @@ MonoBehaviour:
   waypoints: []
   waypointTolerance: 1
   timeBetweenAttacks: 1
-  attackDamage: 2
   sightRange: 6
   attackRange: 4
   playerInSightRange: 0
@@ -383750,7 +383768,6 @@ MonoBehaviour:
   - {fileID: 790524337}
   waypointTolerance: 1
   timeBetweenAttacks: 2
-  attackDamage: 2
   sightRange: 6
   attackRange: 4
   playerInSightRange: 0
@@ -410100,6 +410117,40 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7efdf5599f0b3043b67addc07726e79, type: 3}
+--- !u!1 &2020728208
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2020728209}
+  m_Layer: 0
+  m_Name: Checkpoints
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2020728209
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2020728208}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -37.96824, y: 2.91881, z: -3.75585}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 316780169}
+  - {fileID: 165295359}
+  - {fileID: 2105312434}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &2020919868
 Mesh:
   m_ObjectHideFlags: 0
@@ -433187,11 +433238,11 @@ Transform:
   m_GameObject: {fileID: 2105312430}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.701558, z: -0, w: 0.7126124}
-  m_LocalPosition: {x: -78.9, y: 0.38, z: -15.1}
+  m_LocalPosition: {x: -40.931763, y: -2.5388098, z: -11.344151}
   m_LocalScale: {x: 4, y: 7, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2020728209}
   m_LocalEulerAnglesHint: {x: 0, y: -89.104, z: 0}
 --- !u!43 &2105519211
 Mesh:
@@ -434392,7 +434443,6 @@ MonoBehaviour:
   - {fileID: 732148428}
   waypointTolerance: 1
   timeBetweenAttacks: 1
-  attackDamage: 2
   sightRange: 6
   attackRange: 4
   playerInSightRange: 0
@@ -434763,7 +434813,6 @@ MonoBehaviour:
   - {fileID: 119842291}
   waypointTolerance: 1
   timeBetweenAttacks: 2
-  attackDamage: 2
   sightRange: 6
   attackRange: 4
   playerInSightRange: 0
@@ -447708,9 +447757,6 @@ SceneRoots:
   - {fileID: 1681257451}
   - {fileID: 1158021191}
   - {fileID: 714847032}
-  - {fileID: 316780169}
-  - {fileID: 2105312434}
-  - {fileID: 165295359}
   - {fileID: 1280959941}
   - {fileID: 545335604}
   - {fileID: 111672380}
@@ -447720,3 +447766,5 @@ SceneRoots:
   - {fileID: 5102620522658416251}
   - {fileID: 797815377247801937}
   - {fileID: 768026539}
+  - {fileID: 43603311}
+  - {fileID: 2020728209}
