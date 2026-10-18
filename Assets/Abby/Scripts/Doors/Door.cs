@@ -57,7 +57,7 @@ public class Door : MonoBehaviour
         leftTargetPos = leftClosedPos;
         rightTargetPos = rightClosedPos;
 
-        doorLight.material.color = Color.red; // the doors are closed at the start of the game hence their start off colour is red
+        doorLight.material.SetColor("_EmissionColor", Color.red * 3f); // the doors are closed at the start of the game hence their start off colour is red
     }
     void Update()
     {
@@ -83,14 +83,14 @@ public class Door : MonoBehaviour
             leftTargetPos = leftClosedPos + leftOpenOffset;
             rightTargetPos = rightClosedPos + rightOpenOffset;
 
-            doorLight.material.color = Color.green; // when the door is opened by the player, shader turns green
+            doorLight.material.SetColor("_EmissionColor", Color.green * 3f); // when the door is opened by the player, shader turns green
         }
         else
         {
             leftTargetPos = leftClosedPos;
             rightTargetPos = rightClosedPos;
 
-            doorLight.material.color = Color.red; //when the door is closed or E is cicked for a second time, shader turns red
+            doorLight.material.SetColor("_EmissionColor", Color.red * 3f); //when the door is closed or E is cicked for a second time, shader turns red
         }
     }
     void OnTriggerEnter(Collider other)// If player is active withing space of collider, Collider Should open/close with doors. 
