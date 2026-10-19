@@ -255556,7 +255556,6 @@ MonoBehaviour:
   - {fileID: 523695228}
   - {fileID: 523695229}
   - {fileID: 1651561364}
-  freezeAllDoors: 1
 --- !u!1 &1153635924
 GameObject:
   m_ObjectHideFlags: 0
@@ -428161,7 +428160,7 @@ Transform:
   m_GameObject: {fileID: 1972133126}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -10.822, y: 0, z: 0}
+  m_LocalPosition: {x: -8.901, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
