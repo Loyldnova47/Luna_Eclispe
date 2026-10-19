@@ -3,15 +3,15 @@ using UnityEngine;
 public class LunaDialogueTrigger : MonoBehaviour
 {
     [Header("Character")]
-    public string characterName; // shows at the top of Luna's box
+    public string characterName; 
 
     [Header("Dialogue")]
     [TextArea(2, 4)]
-    public string[] lines; // Luna's lines
+    public string[] lines; 
 
     [Header("Instructions (optional)")]
     [TextArea(2, 4)]
-    public string[] instructionLines; // leave empty if this trigger has no instructions
+    public string[] instructionLines; 
 
     [Header("Settings")]
     public bool onlyTriggerOnce = true;
@@ -20,7 +20,7 @@ public class LunaDialogueTrigger : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        // only the player should set this off
+        
         if (other.CompareTag("Player") == false)
         {
             return;

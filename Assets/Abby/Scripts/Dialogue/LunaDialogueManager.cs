@@ -11,28 +11,28 @@ public class LunaDialogueManager : MonoBehaviour
     public TMP_Text dialogueText;
     public TMP_Text hintText;
 
-    [Header("Instruction Box UI")] // the second box
+    [Header("Instruction Box UI")] 
     public GameObject instructionBox;
     public TMP_Text instructionText;
     public TMP_Text instructionHintText;
 
     [Header("Name")]
-    public string defaultName = "Luna"; // used when a trigger's Character Name is empty
+    public string defaultName = "LUNA"; 
 
     [Header("Hint Messages")]
     public string nextHint = "Right click to continue";
 
-    [Header("Scripts To Freeze")] // drag the player, enemy etc. scripts in here
+    [Header("Scripts To Freeze")] // Scripts I wanna freeze so that the game completely freezes (done in inspector)
     public Behaviour[] scriptsToFreeze;
 
-    // static means other scripts can check these without needing a reference
+    
     public static LunaDialogueManager instance;
     public static bool dialogueIsPlaying = false;
 
     private string[] lines;
     private string[] instructionLines;
     private int currentLine = 0;
-    private bool showingInstructions = false; // true once Luna is done and the second box is up
+    private bool showingInstructions = false; 
 
     // remembers which scripts I switched off so I only switch those back on
     private List<Behaviour> frozenScripts = new List<Behaviour>();
@@ -46,23 +46,23 @@ public class LunaDialogueManager : MonoBehaviour
         instructionBox.SetActive(false);
     }
 
-    // old version, still works for triggers that have no instructions
+    
     public void StartDialogue(string characterName, string[] newLines)
     {
         StartDialogue(characterName, newLines, null);
     }
 
-    // the trigger calls this when the player walks into it
+    
     public void StartDialogue(string characterName, string[] newLines, string[] newInstructionLines)
     {
         if (dialogueIsPlaying == true)
         {
-            return; // already talking so do nothing
+            return; 
         }
 
         if (newLines == null || newLines.Length == 0)
         {
-            return; // no lines were typed in so do nothing
+            return;
         }
 
         lines = newLines;
@@ -71,13 +71,13 @@ public class LunaDialogueManager : MonoBehaviour
         showingInstructions = false;
         dialogueIsPlaying = true;
 
-        // use the default name if the trigger's name was left blank
+        
         if (characterName == "")
         {
             characterName = defaultName;
         }
 
-        // show the name, or hide the name text if there still isn't one
+        
         if (characterName == "")
         {
             nameText.gameObject.SetActive(false);
@@ -92,7 +92,7 @@ public class LunaDialogueManager : MonoBehaviour
         ShowLine();
 
         FreezeScripts();
-        Time.timeScale = 0f; // freezes the whole game
+        Time.timeScale = 0f; // freezes the whole game so that nothing moves
     }
 
     void Update()
@@ -102,17 +102,17 @@ public class LunaDialogueManager : MonoBehaviour
             return;
         }
 
-        // right click goes to the next line
+        
         if (Mouse.current.rightButton.wasPressedThisFrame)
         {
             currentLine = currentLine + 1;
 
             if (showingInstructions == true)
             {
-                // we are in the instruction box
-                if (currentLine >= instructionLines.Length)
+                
+                if (currentLine >= instructionLines.Length) // Instruction Box is actuve 
                 {
-                    EndDialogue(); // last instruction so the game starts again
+                    EndDialogue(); 
                 }
                 else
                 {
@@ -121,16 +121,16 @@ public class LunaDialogueManager : MonoBehaviour
             }
             else
             {
-                // we are in Luna's box
-                if (currentLine >= lines.Length)
+                
+                if (currentLine >= lines.Length) // Luna Box is Active 
                 {
                     if (HasInstructions() == true)
                     {
-                        StartInstructions(); // Luna is done but the game stays frozen
+                        StartInstructions(); // Instructions ae right after dialogue hence freeze isn't activated yet 
                     }
                     else
                     {
-                        EndDialogue(); // no instructions so this was the end
+                        EndDialogue(); // Uf there are no instructions after the dialogue then the Dialoue immediately ends
                     }
                 }
                 else
@@ -151,8 +151,8 @@ public class LunaDialogueManager : MonoBehaviour
         showingInstructions = true;
         currentLine = 0;
 
-        dialogueBox.SetActive(false); // hide Luna's box
-        instructionBox.SetActive(true); // show the instruction box
+        dialogueBox.SetActive(false); 
+        instructionBox.SetActive(true); 
         ShowLine();
     }
 
@@ -168,7 +168,7 @@ public class LunaDialogueManager : MonoBehaviour
         {
             dialogueText.text = lines[currentLine];
 
-            // only say "close" on Luna's last line if there are no instructions after it
+            
             hintText.text = nextHint;
         }
     }
@@ -177,7 +177,7 @@ public class LunaDialogueManager : MonoBehaviour
     {
         frozenScripts.Clear();
 
-        // the scripts I dragged in the Inspector
+        
         foreach (Behaviour script in scriptsToFreeze)
         {
             if (script != null && script.enabled == true)
@@ -209,10 +209,10 @@ public class LunaDialogueManager : MonoBehaviour
         instructionBox.SetActive(false);
 
         UnfreezeScripts();
-        Time.timeScale = 1f; // game starts moving again
+        Time.timeScale = 1f; // game is unfrozen
     }
 
-    // just in case the scene reloads while the game is frozen
+    
     void OnDestroy()
     {
         dialogueIsPlaying = false;
