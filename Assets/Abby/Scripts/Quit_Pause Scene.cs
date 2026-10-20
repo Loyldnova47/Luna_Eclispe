@@ -6,7 +6,7 @@ public class PauseMenu : MonoBehaviour
     public void ClickQuitToMenu()
     {
         Debug.Log("Quitting to menu");
-        SceneManager.LoadScene("Menu"); 
+        SceneManager.LoadScene("Altered_Menu"); 
     }
 }
 
