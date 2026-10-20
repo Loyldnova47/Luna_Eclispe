@@ -49,22 +49,22 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
-        controller = GetComponent<CharacterController>();
-        animator = GetComponentInChildren<Animator>();
-        audioSource = GetComponent<AudioSource>();
+       controller = GetComponent<CharacterController>();
+    animator = GetComponentInChildren<Animator>();
+    audioSource = GetComponent<AudioSource>();
 
-        playerInput = new PlayerInput_new();
-        input = playerInput.Main;
-        AssignInputs();
+    playerInput = new PlayerInput_new();
+    input = playerInput.Main;
+    AssignInputs();
 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+    Cursor.lockState = CursorLockMode.Locked;
+    Cursor.visible = false;
 
-        if (pauseMenuUI != null)
-            pauseMenuUI.SetActive(false);
+    if (pauseMenuUI != null)
+        pauseMenuUI.SetActive(false);
 
-        if (cam != null)
-            camRestPos = cam.transform.localPosition; // capture once, before any shake ever runs 
+    if (cam != null)
+        camRestPos = cam.transform.localPosition; // capture once, before any shake ever runs 
     }
 
     void Update()
@@ -80,31 +80,31 @@ public class PlayerController : MonoBehaviour
     { MoveInput(input.Movement.ReadValue<Vector2>()); }
 
     void LateUpdate()
-    {
-        if (isDead) return;
+    { 
+      if (isDead) return;
 
-        Vector2 lookVector = input.Look.ReadValue<Vector2>();
+      Vector2 lookVector = input.Look.ReadValue<Vector2>();
 
-        var activeControl = input.Look.activeControl;
-        bool isController = activeControl != null && activeControl.device is Gamepad;
+      var activeControl = input.Look.activeControl;
+      bool isController = activeControl != null && activeControl.device is Gamepad;
 
-        LookInput(lookVector, isController);
+      LookInput(lookVector, isController);
     }
 
     public void DisableControllerOnDeath()
     {
-        isDead = true;
-        input.Disable();
-        _PlayerVelocity = Vector3.zero;
+      isDead = true;
+      input.Disable();
+      _PlayerVelocity = Vector3.zero;
 
-        if (shakeRoutine != null)
-        {
-            StopCoroutine(shakeRoutine);
-            shakeRoutine = null;
-        }
+      if (shakeRoutine != null)
+      {
+        StopCoroutine(shakeRoutine);
+        shakeRoutine = null;
+      }
 
-        if (cam != null)
-            cam.transform.localPosition = camRestPos; // hard reset, no waiting on the routine to notice
+       if (cam != null)
+        cam.transform.localPosition = camRestPos; // hard reset, no waiting on the routine to notice
     }
 
     public void EnableControllerOnRespawn()
@@ -165,7 +165,7 @@ public class PlayerController : MonoBehaviour
     void LookInput(Vector3 input, bool isController)
     {
         float currentSensitivity = isController ? controllerSensitivity : mouseSensitivity;
-
+        
         float mouseX = input.x * Time.deltaTime * currentSensitivity;
         float mouseY = input.y * Time.deltaTime * currentSensitivity;
 
@@ -350,35 +350,36 @@ public class PlayerController : MonoBehaviour
 
     public void TriggerShake()
     {
-        if (shakeRoutine != null)
-            StopCoroutine(shakeRoutine);
+    if (shakeRoutine != null)
+        StopCoroutine(shakeRoutine);
 
-        cam.transform.localPosition = camRestPos;
-        shakeRoutine = StartCoroutine(CameraShakeRoutine());
-    }
+    cam.transform.localPosition = camRestPos;
+    shakeRoutine = StartCoroutine(CameraShakeRoutine());
+   }
 
     private IEnumerator CameraShakeRoutine()
     {
         float elapsed = 0.0f;
-        float shakeDuration = 0.08f;
-        float shakeIntensity = 0.08f;
+    float shakeDuration = 0.08f;
+    float shakeIntensity = 0.08f;
 
-        while (elapsed < shakeDuration)
-        {
-            if (isDead) break;
+    while (elapsed < shakeDuration)
+    {
+        if (isDead) break;
 
-            float x = Random.Range(-1f, 1f) * shakeIntensity;
-            float y = Random.Range(-1f, 1f) * shakeIntensity;
+        float x = Random.Range(-1f, 1f) * shakeIntensity;
+        float y = Random.Range(-1f, 1f) * shakeIntensity;
 
-            cam.transform.localPosition = new Vector3(camRestPos.x + x, camRestPos.y + y, camRestPos.z);
+        cam.transform.localPosition = new Vector3(camRestPos.x + x, camRestPos.y + y, camRestPos.z);
 
-            elapsed += Time.unscaledDeltaTime;
-            yield return null;
-        }
-
-        cam.transform.localPosition = camRestPos;
-        shakeRoutine = null;
+        elapsed += Time.unscaledDeltaTime;
+        yield return null;
     }
 
+    cam.transform.localPosition = camRestPos;
+    shakeRoutine = null; 
+    }
 
+    
 }
+
