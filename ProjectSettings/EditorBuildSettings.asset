@@ -5,9 +5,12 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Abby/Menu/Menu.unity
     guid: 2a61a57095b35274ba4115f4cf36edbc
+  - enabled: 1
+    path: Assets/Abby/Menu/Updated Menu/Main_Menu_export/Altered_Menu.unity
+    guid: 50e098c7f4ac55d458d8dd810405a84b
   - enabled: 1
     path: Assets/Abby/Scenes/Intro Scene.unity
     guid: ae60bb7443957a9498ed1f5fc254e572
