@@ -18,5 +18,5 @@ EditorBuildSettings:
     path: Assets/Abby/Scenes/Game Over.unity
     guid: 3e2f32d57b8f25b4ea1b30bc438dee97
   m_configObjects:
-    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+    com.unity.input.settings: {fileID: 11400000, guid: cb456aff53a31664c9866b6b51cef3eb, type: 2}
   m_UseUCBPForAssetBundles: 0
