@@ -414705,7 +414705,7 @@ MonoBehaviour:
   maxHealth: 30
   healthBar: {fileID: 0}
   playerCamera: {fileID: 502629607}
-  shakeIntensity: 0.2
+  shakeIntensity: 1.5
   shakeDuration: 0
 --- !u!114 &1889850213 stripped
 MonoBehaviour:
