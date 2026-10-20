@@ -3,45 +3,32 @@ using UnityEngine;
 
 public class SlamAttack : MonoBehaviour
 {
-    //recognises the arms on either side of the enemy
-    public GameObject rectangleLeft;
-    public GameObject rectangleRight;
+    [Header("Animation")]
+    public Animator animator;
+    public string attackTrigger = "Attack";
 
-    //responsible for timing the frequency of attacks 
     [Header("Timing")]
+    // seconds from the start of the animation to the moment of impact (damage lands here)
     public float telegraphDuration = 0.8f;
+    // seconds after impact before the enemy can move or attack again
     public float activeDuration = 0.2f;
-
-    //responsible for the overall slamming movement of the arms 
-    [Header("Visual Rotation")]
-    public float raisedAngle = -140f;
-    public float slammedAngle = 0f;
-    public Vector3 rotationAxis = Vector3.right;
 
     [Header("Area Attack Settings")]
     // attack zone
-    public float attackRadius = 5f;         
-    //damage dealt to player (luna)
-    public int damageAmount = 1;            
-    public LayerMask playerLayer;          
-    public Transform damageCenter;         
+    public float attackRadius = 5f;
+    // damage dealt to player (luna)
+    public int damageAmount = 1;
+    public LayerMask playerLayer;
+    public Transform damageCenter;
+
     private bool isAttacking = false;
     public bool IsAttacking => isAttacking;
 
-    private Quaternion leftRestRot, rightRestRot;
-    private Quaternion leftRaisedRot, rightRaisedRot;
-
     void Awake()
     {
-        leftRestRot = rectangleLeft.transform.localRotation;
-        rightRestRot = rectangleRight.transform.localRotation;
+        if (animator == null)
+            animator = GetComponentInChildren<Animator>();
 
-        leftRaisedRot = leftRestRot * Quaternion.AngleAxis(raisedAngle, rotationAxis);
-        rightRaisedRot = rightRestRot * Quaternion.AngleAxis(raisedAngle, rotationAxis);
-
-        rectangleLeft.transform.localRotation = leftRaisedRot;
-        rectangleRight.transform.localRotation = rightRaisedRot;
-        
         // damage center set to the enemy's position by default
         if (damageCenter == null) damageCenter = transform;
     }
@@ -56,47 +43,18 @@ public class SlamAttack : MonoBehaviour
     {
         isAttacking = true;
 
-        Quaternion leftSlamRot = leftRestRot * Quaternion.AngleAxis(slammedAngle, rotationAxis);
-        Quaternion rightSlamRot = rightRestRot * Quaternion.AngleAxis(slammedAngle, rotationAxis);
+        // play the attack animation
+        if (animator != null)
+            animator.SetTrigger(attackTrigger);
 
-        // downward swing of arms 
-        float elapsed = 0f;
-        while (elapsed < telegraphDuration)
-        {
-            elapsed += Time.deltaTime;
-            float t = elapsed / telegraphDuration;
+        // wait for the impact moment of the animation
+        yield return new WaitForSeconds(telegraphDuration);
 
-            rectangleLeft.transform.localRotation = Quaternion.Slerp(leftRaisedRot, leftSlamRot, t);
-            rectangleRight.transform.localRotation = Quaternion.Slerp(rightRaisedRot, rightSlamRot, t);
-
-            yield return null;
-        }
-
-        rectangleLeft.transform.localRotation = leftSlamRot;
-        rectangleRight.transform.localRotation = rightSlamRot;
-
-       //dealing damage within a area (not directly from the arms)
+        // dealing damage within an area (not directly from the arms)
         DealAreaDamage();
 
-        // keep arms temporarily in slam position
+        // short recovery before the enemy can act again
         yield return new WaitForSeconds(activeDuration);
-
-        //the swing moves back up to default position
-        elapsed = 0f;
-        float returnDuration = telegraphDuration * 0.5f;
-        while (elapsed < returnDuration)
-        {
-            elapsed += Time.deltaTime;
-            float t = elapsed / returnDuration;
-
-            rectangleLeft.transform.localRotation = Quaternion.Slerp(leftSlamRot, leftRaisedRot, t);
-            rectangleRight.transform.localRotation = Quaternion.Slerp(rightSlamRot, rightRaisedRot, t);
-
-            yield return null;
-        }
-
-        rectangleLeft.transform.localRotation = leftRaisedRot;
-        rectangleRight.transform.localRotation = rightRaisedRot;
 
         isAttacking = false;
     }
@@ -122,7 +80,7 @@ public class SlamAttack : MonoBehaviour
         }
     }
 
-    // visualises the attack radius 
+    // visualises the attack radius
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.magenta;

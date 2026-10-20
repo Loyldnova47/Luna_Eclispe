@@ -5,6 +5,7 @@ public class WayPointAI : Actor
 {
     public NavMeshAgent agent;
     public Transform player;
+    private Animator animator;
     public LayerMask whatIsGround, whatIsPlayer;
 
     public int healthRewardOnDeath = 2;
@@ -16,12 +17,12 @@ public class WayPointAI : Actor
     public float timeBetweenAttacks;
     bool alreadyAttacked;
 
-        //range takes note of where the player is 
+    // range takes note of where the player is
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
 
     // attacks happen via slamming
-    private SlamAttack slamAttack; 
+    private SlamAttack slamAttack;
 
     private void Awake()
     {
@@ -30,9 +31,9 @@ public class WayPointAI : Actor
         if (Luna != null)
             player = Luna.transform;
 
-        
         agent = GetComponent<NavMeshAgent>();
-        slamAttack = GetComponent<SlamAttack>(); 
+        slamAttack = GetComponent<SlamAttack>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     private void Update()
@@ -43,12 +44,14 @@ public class WayPointAI : Actor
         if (!playerInSightRange && !playerInAttackRange) Patroling();
         if (playerInSightRange && !playerInAttackRange) ChasePlayer();
         if (playerInSightRange && playerInAttackRange) AttackPlayer();
+
+        if (animator != null)
+            animator.SetFloat("Speed", agent.velocity.magnitude);
     }
 
-    //responsible for controlling roaming activity between way points 
+    // responsible for controlling roaming activity between way points
     private void Patroling()
     {
-        
         if (waypoints == null || waypoints.Length == 0) return;
 
         Transform targetWaypoint = waypoints[currentWaypointIndex];
@@ -62,36 +65,39 @@ public class WayPointAI : Actor
         }
     }
 
-
     private void ChasePlayer()
     {
-        if (slamAttack !=null && slamAttack.IsAttacking)
+        if (slamAttack != null && slamAttack.IsAttacking)
         {
             agent.SetDestination(transform.position);
             return;
         }
 
-        agent.SetDestination (player.position);
-        
+        agent.SetDestination(player.position);
     }
 
     public void AttackPlayer()
     {
         agent.SetDestination(transform.position);
 
-          if (!alreadyAttacked && (slamAttack == null || !slamAttack.IsAttacking))
-    {
-        //player gets faced during attacks 
-        transform.LookAt(player); 
+        if (!alreadyAttacked && (slamAttack == null || !slamAttack.IsAttacking))
+        {
+            // player gets faced during attacks
+            transform.LookAt(player);
 
-        if (slamAttack != null)
-            slamAttack.PerformAttack();
+            if (slamAttack != null)
+            {
+                if (animator != null)
+                    animator.SetTrigger("Attack");
 
-        //when the player is slammed, the logic resets to continue attacking between incraments of time
-        alreadyAttacked = true;
-        Invoke(nameof(ResetAttack), timeBetweenAttacks);
+                slamAttack.PerformAttack();
+            }
+
+            // when the player is slammed, the logic resets to continue attacking between increments of time
+            alreadyAttacked = true;
+            Invoke(nameof(ResetAttack), timeBetweenAttacks);
+        }
     }
-}
 
     public void ResetAttack()
     {
@@ -104,9 +110,10 @@ public class WayPointAI : Actor
         {
             PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
             if (playerHealth != null)
-
-                //player gets rewarded with hp for killing enemy (glorp)
+            {
+                // player gets rewarded with hp for killing enemy (glorp)
                 playerHealth.AddHealth(healthRewardOnDeath);
+            }
         }
 
         base.Death();
