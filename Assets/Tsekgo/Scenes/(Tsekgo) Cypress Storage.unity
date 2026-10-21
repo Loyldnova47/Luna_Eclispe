@@ -134736,10 +134736,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.6371054
+  m_Radius: 0.7084607
   m_Height: 3.1687799
   m_Direction: 1
-  m_Center: {x: -0.5978915, y: -0.005147338, z: -2.2298627}
+  m_Center: {x: -0.5978867, y: -0.0051473486, z: -1.4646573}
 --- !u!23 &547651360
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -469490,10 +469490,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.60763234
+  m_Radius: 0.8411021
   m_Height: 3.0882752
   m_Direction: 1
-  m_Center: {x: -0.16954942, y: -0.005147338, z: -1.9144164}
+  m_Center: {x: -0.15886518, y: -0.0051473486, z: -1.914416}
 --- !u!23 &1904405780
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -546313,7 +546313,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4694670248908701131, guid: c0369be4a75e8a445b83552e7491c26a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4694670248908701131, guid: c0369be4a75e8a445b83552e7491c26a, type: 3}
       propertyPath: m_StaticEditorFlags
