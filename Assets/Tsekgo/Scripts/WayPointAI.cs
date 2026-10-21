@@ -1,143 +1,90 @@
+using System.Collections;
 using UnityEngine;
-using UnityEngine.AI;
 
-public class WayPointAI : Actor
+public class SlamAttack : MonoBehaviour
 {
-    public NavMeshAgent agent;
-    public Transform player;
-    private Animator animator;
-    public LayerMask whatIsGround, whatIsPlayer;
+    [Header("Animation")]
+    public Animator animator;
+    public string attackTrigger = "Attack";
 
-    public int healthRewardOnDeath = 2;
+    [Header("Timing")]
+    // seconds from the start of the animation to the moment of impact (damage lands here)
+    public float telegraphDuration = 0.8f;
+    // seconds after impact before the enemy can move or attack again
+    public float activeDuration = 0.2f;
 
-    public Transform[] waypoints;
-    private int currentWaypointIndex;
-    public float waypointTolerance = 1f;
+    [Header("Area Attack Settings")]
+    // attack zone
+    public float attackRadius = 5f;
+    // damage dealt to player (luna)
+    public int damageAmount = 1;
+    public LayerMask playerLayer;
+    public Transform damageCenter;
 
-    public float timeBetweenAttacks;
-    bool alreadyAttacked;
+    private bool isAttacking = false;
+    public bool IsAttacking => isAttacking;
 
-    // range takes note of where the player is
-    public float sightRange, attackRange;
-    public bool playerInSightRange, playerInAttackRange;
-
-    // attacks happen via slamming
-    private SlamAttack slamAttack;
-
-    private void Awake()
+    void Awake()
     {
-        // enemies have objective to find the player (luna)
-        GameObject Luna = GameObject.Find("Luna");
-        if (Luna != null)
-            player = Luna.transform;
+        if (animator == null)
+            animator = GetComponentInChildren<Animator>();
 
-        agent = GetComponent<NavMeshAgent>();
-        slamAttack = GetComponent<SlamAttack>();
-        animator = GetComponentInChildren<Animator>();
+        // damage center set to the enemy's position by default
+        if (damageCenter == null) damageCenter = transform;
     }
 
-    private void Update()
+    public void PerformAttack()
     {
-        playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
-        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
+        if (isAttacking) return;
+        StartCoroutine(AttackSequence());
+    }
 
-        if (!playerInSightRange && !playerInAttackRange) Patroling();
-        if (playerInSightRange && !playerInAttackRange) ChasePlayer();
-        if (playerInSightRange && playerInAttackRange) AttackPlayer();
+    private IEnumerator AttackSequence()
+    {
+        isAttacking = true;
 
+        // play the attack animation
         if (animator != null)
-            animator.SetFloat("Speed", agent.velocity.magnitude);
+            animator.SetTrigger(attackTrigger);
+
+        // wait for the impact moment of the animation
+        yield return new WaitForSeconds(telegraphDuration);
+
+        // dealing damage within an area (not directly from the arms)
+        DealAreaDamage();
+
+        // short recovery before the enemy can act again
+        yield return new WaitForSeconds(activeDuration);
+
+        isAttacking = false;
     }
 
-    // responsible for controlling roaming activity between way points
-    private void Patroling()
+    private void DealAreaDamage()
     {
-        if (waypoints == null || waypoints.Length == 0) return;
+        // recognises all colliders on the player area that are within the attack area
+        Collider[] hitColliders = Physics.OverlapSphere(damageCenter.position, attackRadius, playerLayer);
 
-        Transform targetWaypoint = waypoints[currentWaypointIndex];
-        agent.SetDestination(targetWaypoint.position);
-
-        float distanceToWaypoint = Vector3.Distance(transform.position, targetWaypoint.position);
-
-        if (distanceToWaypoint < waypointTolerance)
+        foreach (Collider hit in hitColliders)
         {
-            currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Length;
-        }
-    }
-
-    private void ChasePlayer()
-    {
-        if (slamAttack != null && slamAttack.IsAttacking)
-        {
-            agent.SetDestination(transform.position);
-            return;
-        }
-
-        agent.SetDestination(player.position);
-    }
-
-    public void AttackPlayer()
-    {
-        agent.SetDestination(transform.position);
-
-        if (!alreadyAttacked && (slamAttack == null || !slamAttack.IsAttacking))
-        {
-            // player gets faced during attacks
-            transform.LookAt(player);
-
-            if (slamAttack != null)
+            PlayerHealth playerHealth = hit.GetComponent<PlayerHealth>();
+            if (playerHealth == null)
             {
-                if (animator != null)
-                    animator.SetTrigger("Attack");
-
-                slamAttack.PerformAttack();
+                playerHealth = hit.GetComponentInParent<PlayerHealth>();
             }
 
-            // when the player is slammed, the logic resets to continue attacking between increments of time
-            alreadyAttacked = true;
-            Invoke(nameof(ResetAttack), timeBetweenAttacks);
-        }
-    }
-
-    public void ResetAttack()
-    {
-        alreadyAttacked = false;
-    }
-
-    protected override void Death()
-    {
-        if (player != null)
-        {
-            PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
             if (playerHealth != null)
             {
-                // player gets rewarded with hp for killing enemy (glorp)
-                playerHealth.AddHealth(healthRewardOnDeath);
+                playerHealth.TakeDamage(damageAmount);
+                Debug.Log($"Player caught in aerial blast! Dealt {damageAmount} damage.");
             }
         }
-
-        base.Death();
     }
 
-    public void OnDrawGizmosSelected()
+    // visualises the attack radius
+    private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, sightRange);
-
-        if (waypoints != null && waypoints.Length > 0)
-        {
-            Gizmos.color = Color.cyan;
-            for (int i = 0; i < waypoints.Length; i++)
-            {
-                if (waypoints[i] == null) continue;
-                Gizmos.DrawSphere(waypoints[i].position, 0.3f);
-
-                Transform nextWaypoint = waypoints[(i + 1) % waypoints.Length];
-                if (nextWaypoint != null)
-                    Gizmos.DrawLine(waypoints[i].position, nextWaypoint.position);
-            }
-        }
+        Gizmos.color = Color.magenta;
+        Vector3 center = damageCenter != null ? damageCenter.position : transform.position;
+        Gizmos.DrawWireSphere(center, attackRadius);
     }
 }
