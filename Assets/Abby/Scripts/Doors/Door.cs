@@ -9,6 +9,12 @@ public class Door : MonoBehaviour
     public Transform leftDoor;
     public Transform rightDoor;
 
+    [Header("Light Status")]
+    public Renderer doorLight;
+
+    [Header("Code Lock (optional)")]
+    public CodeLock codeLock; 
+
     [Header("Movement")] // Positioning of Doors and their movement speed 
     public Vector3 leftOpenOffset = new Vector3(-81.1f, 1.52f, -16.35f);
     public Vector3 rightOpenOffset = new Vector3(-76.64f, 1.52f, -16.35f);
@@ -45,7 +51,10 @@ public class Door : MonoBehaviour
     void OnDestroy()
     {
         controls.DoorInteraction.Button.performed -= OnInteractPerformed;
+        if (codeLock != null) codeLock.onUnlocked.RemoveListener (ToggleDoor);
     }
+
+
     void Start()
     {
         leftClosedPos = leftDoor.localPosition;
@@ -53,7 +62,11 @@ public class Door : MonoBehaviour
 
         leftTargetPos = leftClosedPos;
         rightTargetPos = rightClosedPos;
+
+        doorLight.material.SetColor("_EmissionColor", Color.red * 3f); // the doors are closed at the start of the game hence their start off colour is red
     }
+
+
     void Update()
     {
 
@@ -63,10 +76,20 @@ public class Door : MonoBehaviour
 
     private void OnInteractPerformed(InputAction.CallbackContext context)
     {
-        if (playerInRange)
+        if (!playerInRange) return; 
+
+        //Locked and enabled through E: Opens keypad instead of door
+
+        if ( codeLock != null && !codeLock.IsUnlocked)
         {
-            ToggleDoor();
+            codeLock.Open();
+            return;
+            
         }
+        
+            ToggleDoor();
+
+
     }
 
     void ToggleDoor()
@@ -77,11 +100,15 @@ public class Door : MonoBehaviour
         {
             leftTargetPos = leftClosedPos + leftOpenOffset;
             rightTargetPos = rightClosedPos + rightOpenOffset;
+
+            doorLight.material.SetColor("_EmissionColor", Color.green * 3f); // when the door is opened by the player, shader turns green
         }
         else
         {
             leftTargetPos = leftClosedPos;
             rightTargetPos = rightClosedPos;
+
+            doorLight.material.SetColor("_EmissionColor", Color.red * 3f); //when the door is closed or E is cicked for a second time, shader turns red
         }
     }
     void OnTriggerEnter(Collider other)// If player is active withing space of collider, Collider Should open/close with doors. 

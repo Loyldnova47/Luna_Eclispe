@@ -3,42 +3,33 @@ using UnityEngine;
 
 public class SlamAttack : MonoBehaviour
 {
-    public GameObject rectangleLeft;
-    public GameObject rectangleRight;
+    [Header("Animation")]
+    public Animator animator;
+    public string attackTrigger = "Attack";
 
     [Header("Timing")]
+    // seconds from the start of the animation to the moment of impact (damage lands here)
     public float telegraphDuration = 0.8f;
+    // seconds after impact before the enemy can move or attack again
     public float activeDuration = 0.2f;
 
-    [Header("Visual Rotation")]
-    public float raisedAngle = -140f;
-    public float slammedAngle = 0f;
-    public Vector3 rotationAxis = Vector3.right;
-
     [Header("Area Attack Settings")]
-    public float attackRadius = 5f;          // How wide the aerial damage zone is
-    public int damageAmount = 1;             // Damage dealt to the player
-    public LayerMask playerLayer;            // Set this to your Player layer
-    public Transform damageCenter;           // Where the attack originates (defaults to enemy position)
+    // attack zone
+    public float attackRadius = 5f;
+    // damage dealt to player (luna)
+    public int damageAmount = 1;
+    public LayerMask playerLayer;
+    public Transform damageCenter;
 
     private bool isAttacking = false;
     public bool IsAttacking => isAttacking;
 
-    private Quaternion leftRestRot, rightRestRot;
-    private Quaternion leftRaisedRot, rightRaisedRot;
-
     void Awake()
     {
-        leftRestRot = rectangleLeft.transform.localRotation;
-        rightRestRot = rectangleRight.transform.localRotation;
+        if (animator == null)
+            animator = GetComponentInChildren<Animator>();
 
-        leftRaisedRot = leftRestRot * Quaternion.AngleAxis(raisedAngle, rotationAxis);
-        rightRaisedRot = rightRestRot * Quaternion.AngleAxis(raisedAngle, rotationAxis);
-
-        rectangleLeft.transform.localRotation = leftRaisedRot;
-        rectangleRight.transform.localRotation = rightRaisedRot;
-        
-        // If no custom damage center is set, use the enemy's feet/position
+        // damage center set to the enemy's position by default
         if (damageCenter == null) damageCenter = transform;
     }
 
@@ -52,54 +43,25 @@ public class SlamAttack : MonoBehaviour
     {
         isAttacking = true;
 
-        Quaternion leftSlamRot = leftRestRot * Quaternion.AngleAxis(slammedAngle, rotationAxis);
-        Quaternion rightSlamRot = rightRestRot * Quaternion.AngleAxis(slammedAngle, rotationAxis);
+        // play the attack animation
+        if (animator != null)
+            animator.SetTrigger(attackTrigger);
 
-        // 1. Swing DOWN (Telegraph phase)
-        float elapsed = 0f;
-        while (elapsed < telegraphDuration)
-        {
-            elapsed += Time.deltaTime;
-            float t = elapsed / telegraphDuration;
+        // wait for the impact moment of the animation
+        yield return new WaitForSeconds(telegraphDuration);
 
-            rectangleLeft.transform.localRotation = Quaternion.Slerp(leftRaisedRot, leftSlamRot, t);
-            rectangleRight.transform.localRotation = Quaternion.Slerp(rightRaisedRot, rightSlamRot, t);
-
-            yield return null;
-        }
-
-        rectangleLeft.transform.localRotation = leftSlamRot;
-        rectangleRight.transform.localRotation = rightSlamRot;
-
-        // 2. IMPACT MOMENT: Deal Area Damage instantly
+        // dealing damage within an area (not directly from the arms)
         DealAreaDamage();
 
-        // Hold the slammed position briefly
+        // short recovery before the enemy can act again
         yield return new WaitForSeconds(activeDuration);
-
-        // 3. Swing back UP to raised/idle position
-        elapsed = 0f;
-        float returnDuration = telegraphDuration * 0.5f;
-        while (elapsed < returnDuration)
-        {
-            elapsed += Time.deltaTime;
-            float t = elapsed / returnDuration;
-
-            rectangleLeft.transform.localRotation = Quaternion.Slerp(leftSlamRot, leftRaisedRot, t);
-            rectangleRight.transform.localRotation = Quaternion.Slerp(rightSlamRot, rightRaisedRot, t);
-
-            yield return null;
-        }
-
-        rectangleLeft.transform.localRotation = leftRaisedRot;
-        rectangleRight.transform.localRotation = rightRaisedRot;
 
         isAttacking = false;
     }
 
     private void DealAreaDamage()
     {
-        // Finds all colliders on the 'playerLayer' within the 'attackRadius'
+        // recognises all colliders on the player area that are within the attack area
         Collider[] hitColliders = Physics.OverlapSphere(damageCenter.position, attackRadius, playerLayer);
 
         foreach (Collider hit in hitColliders)
@@ -118,7 +80,7 @@ public class SlamAttack : MonoBehaviour
         }
     }
 
-    // Visualises the attack radius in the Unity editor scene view
+    // visualises the attack radius
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.magenta;

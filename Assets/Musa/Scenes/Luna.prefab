@@ -117,7 +117,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -394,11 +394,20 @@ MonoBehaviour:
   gravity: -9.8
   jumpHeight: 1.2
   cam: {fileID: 8812832575229768437}
-  sensitivity: 30
+  mouseSensitivity: 15
+  controllerSensitivity: 120
+  pauseMenuUI: {fileID: 0}
+  playerCurrentHealth: 100
+  playerMaxHealth: 100
+  footstepSound: {fileID: 0}
+  footstepInterval: 0.5
+  damageRegistryDelay: 0.2
+  totalAttackDuration: 0.6
   attackDistance: 3
   attackDelay: 0.4
   attackSpeed: 1
   attackDamage: 1
+  hitImpactDelay: 0.2
   attackLayer:
     serializedVersion: 2
     m_Bits: 0

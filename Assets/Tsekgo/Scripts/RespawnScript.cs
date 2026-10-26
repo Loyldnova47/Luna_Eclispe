@@ -8,7 +8,7 @@ public class RespawnScript : MonoBehaviour
     public GameObject respawnPoint;
 
     void Awake()
-    {
+    {   //player respawns from their default position 
         if (respawnPoint == null)
         {
             respawnPoint = defaultSpawnPoint;
